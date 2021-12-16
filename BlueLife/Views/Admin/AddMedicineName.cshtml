@@ -1,0 +1,35 @@
+﻿@model BlueLife.ViewModels.Admin.MedicineNameViewModel
+
+<form class="form-group" method="post" asp-controller="Admin" asp-action="AddMedicineName">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label>Название лекарства</label>
+        <input class="form-control shadow-sm bg-white rounded" asp-for="Name" placeholder="Введите название лекарства">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Предназначение лекарства</label>
+        <input id="catalogMedicine" style="width: 40%;" asp-for="CatalogMedicinesId"/>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block shadow-sm rounded">Добавить</button>
+    </div>
+</form>
+
+<script>
+$("#catalogMedicine").kendoDropDownList({
+        dataTextField: "nameCatalogMedicine",
+        dataValueField: "id",
+        optionLabel: "Выберите предназначение лекарства...",
+        height: 500,
+        dataSource: {
+            transport: {
+                read: {
+                    url: "@Url.Action("GetAllCatalogMedicine", "Admin")",
+                    dataType: "json",
+                    cache: false
+                }
+            }
+        }
+    });
+</script>

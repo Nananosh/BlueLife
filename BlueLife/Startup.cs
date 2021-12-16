@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlueLife.Business.Interfaces;
+using BlueLife.Business.Services;
+using BlueLife.Controllers;
 using BlueLife.Migrations;
 using BlueLife.Models;
 using BlueLife.ViewModels.Mappings;
@@ -28,8 +31,15 @@ namespace BlueLife
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IAdminService, AdminService>();
+            
             services.AddAutoMapper(typeof(UserMappingProfile));
             services.AddControllersWithViews();
+            
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             
             services.AddDbContext<ApplicationContext>(
                 options =>

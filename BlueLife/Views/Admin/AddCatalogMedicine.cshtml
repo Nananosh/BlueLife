@@ -1,0 +1,13 @@
+﻿@model BlueLife.ViewModels.Admin.CatalogMedicineViewModel
+
+<form class="form-group" method="post" asp-controller="Admin" asp-action="AddCatalogMedicine">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label>Предназначение препарата</label>
+        <input class="form-control shadow-sm bg-white rounded" asp-for="NameCatalogMedicine" placeholder="Введите тип препарата">
+        <span asp-validation-for="NameCatalogMedicine" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block shadow-sm rounded">Добавить</button>
+    </div>
+</form>

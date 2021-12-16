@@ -6,7 +6,7 @@ namespace BlueLife.Models
     {
         public int Id { get; set; }
         public Basket Basket { get; set; }
-        public Medicine Medicine { get; set; }
+        public PharmacyWarehouse PharmacyWarehouse { get; set; }
         public int Quantity { get; set; }
     }
 }
