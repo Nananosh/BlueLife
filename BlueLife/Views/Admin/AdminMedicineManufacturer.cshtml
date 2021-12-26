@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+
+<body>
+<br/><br/><br/>
+<div id="example">
+    <div id="grid"></div>
+    <script>
+        $(document).ready(function() {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("GetAllMedicineManufacturer", "Admin")",
+                        create: {
+                            url: "@Url.Action("AddMedicineManufacturer","Admin")",
+                            dataType: "json",
+                            type: "POST"
+                        },
+                        update: {
+                            url: "@Url.Action("EditMedicineManufacturer","Admin")",
+                            dataType: "json",
+                            type: "POST"
+                        },
+                        destroy: {
+                            url: "@Url.Action("DeleteMedicineManufacturer","Admin")",
+                            dataType: "json",
+                            type: "DELETE"
+                        }
+                    },
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Id: { editable: false, from: "id", type: "number" },
+                                Manufacturer: { from: "manufacturer", type: "string", validation: {required: true} }
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true
+                },
+                height: 550,
+                editable: "popup",
+                // filterable: true,
+                // sortable: true,
+                pageable: true,
+                toolbar: [
+                    "create"
+                ],
+                columns: [
+                    {
+                        field:"Id",
+                        filterable: false,
+                        exportable: { pdf: true, excel: true }
+                    },
+                    {
+                        field: "Manufacturer",
+                        title: "Производитель"
+                    },
+                    {
+                        command: "edit"
+                    },
+                    {
+                        command: "destroy"
+                    }
+                ]
+            });
+        });
+    </script>
+</div>
+</body>

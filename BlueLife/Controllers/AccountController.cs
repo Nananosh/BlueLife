@@ -2,9 +2,11 @@
 using BlueLife.Migrations;
 using BlueLife.Models;
 using BlueLife.ViewModels;
+using BlueLife.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlueLife.Controllers
 {
@@ -21,6 +23,12 @@ namespace BlueLife.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        
+        public async Task<string> GetUserImage(string id)
+        {
+            var user = await _database.Users.SingleOrDefaultAsync(u => u.Id == id);
+            return user.UserImage;
+        }
 
         [HttpGet]
         public IActionResult Register()
@@ -36,7 +44,10 @@ namespace BlueLife.Controllers
                 var user = new User
                 {
                     Email = model.Email, UserName = model.UserName,
-                    UserImage = "https://img.icons8.com/material-outlined/200/000000/user--v1.png"
+                    UserImage = "https://img.icons8.com/material-outlined/200/000000/user--v1.png",
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    LastName = model.Lastname
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);

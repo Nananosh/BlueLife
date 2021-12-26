@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+
+<body>
+       <br/><br/><br/>
+       <div id="example">
+           <div id="grid"></div>
+           <script>
+               $(document).ready(function() {
+                   $("#grid").kendoGrid({
+                       dataSource: {
+                           transport: {
+                               read: "@Url.Action("GetAllPharmacyWarehouses", "Admin")",
+                               update: {
+                                   url: "@Url.Action("EditPharmacyWarehouses","Admin")",
+                                   dataType: "json",
+                                   type: "POST"
+                               },
+                               create:{
+                                   url: "@Url.Action("AddPharmacyWarehouses","Admin")",
+                                   dataType: "json",
+                                   type: "POST"  
+                               },
+                               destroy: {
+                                   url: "@Url.Action("DeletePharmacyWarehouses","Admin")",
+                                   dataType: "json",
+                                   type: "DELETE"
+                               }
+                           },
+                           schema: {
+                               model: {
+                                   id: "Id",
+                                   fields: {
+                                       Id: { editable: false, from: "id", type: "number" },
+                                       ReleaseMedicine: { from: "releaseMedicine", validation: {required: true} }, 
+                                       ReleaseMedicineId: {from: "releaseMedicineId", validation: {required: true} },
+                                       Price: { from: "price", type: "number", validation: {required: true }},
+                                       Quantity: { from: "quantity", type: "number", validation: {required: true }},
+                                   }
+                               }
+                           },
+                           pageSize: 20,
+                           serverPaging: true,
+                           serverFiltering: true,
+                           serverSorting: true
+                       },
+                       height: 550,
+                       editable: "popup",
+                       // filterable: true,
+                       // sortable: true,
+                       pageable: true,
+                       toolbar: [
+                           {name: "create"}
+                       ],
+                       columns: [
+                           {
+                               field:"Id",
+                               filterable: false
+                           },
+                           {
+                               field: "ReleaseMedicine.fullReleaseMedicine",
+                               title: "Выпущенный препарат",
+                               editor: releaseMedicineEditor
+                           }, 
+                           {
+                               field: "Price",
+                               title: "Цена",
+                           }, 
+                           {
+                               field: "Quantity",
+                               title: "Количество"
+                           },
+                           {
+                               command: "edit", 
+                           },
+                           {
+                               command: "destroy"
+                           }
+                       ]
+                   });
+               });
+               
+               function releaseMedicineEditor(container, options) {
+                   $('<input required name="ReleaseMedicineId">')
+                       .appendTo(container)
+                       .kendoDropDownList({
+                           dataTextField: "fullReleaseMedicine",
+                           dataValueField: "id",
+                           height: 500,
+                           dataSource: {
+                               transport: {
+                                   read: {
+                                       url: "@Url.Action("GetAllReleaseMedicine", "Admin")",
+                                       dataType: "json",
+                                       cache: false
+                                   }
+                               }
+                           }
+                       });
+               }
+           </script>
+       </div>
+       </body>

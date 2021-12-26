@@ -46,7 +46,7 @@ namespace BlueLife.Migrations
                     b.Property<int?>("BasketId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MedicineId")
+                    b.Property<int?>("PharmacyWarehouseId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -56,9 +56,24 @@ namespace BlueLife.Migrations
 
                     b.HasIndex("BasketId");
 
-                    b.HasIndex("MedicineId");
+                    b.HasIndex("PharmacyWarehouseId");
 
                     b.ToTable("BasketMedicine");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.CatalogMedicine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NameCatalogMedicine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CatalogMedicine");
                 });
 
             modelBuilder.Entity("BlueLife.Models.Medicine", b =>
@@ -71,12 +86,6 @@ namespace BlueLife.Migrations
                     b.Property<double>("Dosage")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("MedicineManufacturerId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("MedicineNameId")
                         .HasColumnType("int");
 
@@ -86,21 +95,10 @@ namespace BlueLife.Migrations
                     b.Property<int?>("MedicineUnitId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Volume")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedicineManufacturerId");
 
                     b.HasIndex("MedicineNameId");
 
@@ -133,10 +131,15 @@ namespace BlueLife.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CatalogMedicinesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CatalogMedicinesId");
 
                     b.ToTable("MedicineName");
                 });
@@ -187,6 +190,9 @@ namespace BlueLife.Migrations
                     b.Property<int?>("OrderStatusId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TotalAmount")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -206,10 +212,10 @@ namespace BlueLife.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BasketId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MedicineId")
+                    b.Property<int?>("PharmacyWarehouseId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -217,9 +223,9 @@ namespace BlueLife.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BasketId");
+                    b.HasIndex("OrderId");
 
-                    b.HasIndex("MedicineId");
+                    b.HasIndex("PharmacyWarehouseId");
 
                     b.ToTable("OrderMedicine");
                 });
@@ -239,6 +245,63 @@ namespace BlueLife.Migrations
                     b.ToTable("OrderStatus");
                 });
 
+            modelBuilder.Entity("BlueLife.Models.PharmacyWarehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ReleaseMedicineId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReleaseMedicineId");
+
+                    b.ToTable("PharmacyWarehouses");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.ReleaseMedicine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ManufacturerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MedicineId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManufacturerId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.ToTable("ReleaseMedicine");
+                });
+
             modelBuilder.Entity("BlueLife.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -250,6 +313,9 @@ namespace BlueLife.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -462,21 +528,17 @@ namespace BlueLife.Migrations
                         .WithMany("Medicines")
                         .HasForeignKey("BasketId");
 
-                    b.HasOne("BlueLife.Models.Medicine", "Medicine")
+                    b.HasOne("BlueLife.Models.PharmacyWarehouse", "PharmacyWarehouse")
                         .WithMany("Baskets")
-                        .HasForeignKey("MedicineId");
+                        .HasForeignKey("PharmacyWarehouseId");
 
                     b.Navigation("Basket");
 
-                    b.Navigation("Medicine");
+                    b.Navigation("PharmacyWarehouse");
                 });
 
             modelBuilder.Entity("BlueLife.Models.Medicine", b =>
                 {
-                    b.HasOne("BlueLife.Models.MedicineManufacturer", "MedicineManufacturer")
-                        .WithMany("Medicines")
-                        .HasForeignKey("MedicineManufacturerId");
-
                     b.HasOne("BlueLife.Models.MedicineName", "MedicineName")
                         .WithMany("Medicines")
                         .HasForeignKey("MedicineNameId");
@@ -489,13 +551,20 @@ namespace BlueLife.Migrations
                         .WithMany("Medicines")
                         .HasForeignKey("MedicineUnitId");
 
-                    b.Navigation("MedicineManufacturer");
-
                     b.Navigation("MedicineName");
 
                     b.Navigation("MedicineType");
 
                     b.Navigation("MedicineUnit");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.MedicineName", b =>
+                {
+                    b.HasOne("BlueLife.Models.CatalogMedicine", "CatalogMedicines")
+                        .WithMany("MedicineNames")
+                        .HasForeignKey("CatalogMedicinesId");
+
+                    b.Navigation("CatalogMedicines");
                 });
 
             modelBuilder.Entity("BlueLife.Models.Order", b =>
@@ -515,15 +584,39 @@ namespace BlueLife.Migrations
 
             modelBuilder.Entity("BlueLife.Models.OrderMedicine", b =>
                 {
-                    b.HasOne("BlueLife.Models.Order", "Basket")
+                    b.HasOne("BlueLife.Models.Order", "Order")
                         .WithMany("Medicines")
-                        .HasForeignKey("BasketId");
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("BlueLife.Models.PharmacyWarehouse", "PharmacyWarehouse")
+                        .WithMany("Orders")
+                        .HasForeignKey("PharmacyWarehouseId");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("PharmacyWarehouse");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.PharmacyWarehouse", b =>
+                {
+                    b.HasOne("BlueLife.Models.ReleaseMedicine", "ReleaseMedicine")
+                        .WithMany("PharmacyWarehouses")
+                        .HasForeignKey("ReleaseMedicineId");
+
+                    b.Navigation("ReleaseMedicine");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.ReleaseMedicine", b =>
+                {
+                    b.HasOne("BlueLife.Models.MedicineManufacturer", "Manufacturer")
+                        .WithMany("ReleaseMedicines")
+                        .HasForeignKey("ManufacturerId");
 
                     b.HasOne("BlueLife.Models.Medicine", "Medicine")
-                        .WithMany("Orders")
+                        .WithMany("ReleaseMedicines")
                         .HasForeignKey("MedicineId");
 
-                    b.Navigation("Basket");
+                    b.Navigation("Manufacturer");
 
                     b.Navigation("Medicine");
                 });
@@ -584,16 +677,19 @@ namespace BlueLife.Migrations
                     b.Navigation("Medicines");
                 });
 
+            modelBuilder.Entity("BlueLife.Models.CatalogMedicine", b =>
+                {
+                    b.Navigation("MedicineNames");
+                });
+
             modelBuilder.Entity("BlueLife.Models.Medicine", b =>
                 {
-                    b.Navigation("Baskets");
-
-                    b.Navigation("Orders");
+                    b.Navigation("ReleaseMedicines");
                 });
 
             modelBuilder.Entity("BlueLife.Models.MedicineManufacturer", b =>
                 {
-                    b.Navigation("Medicines");
+                    b.Navigation("ReleaseMedicines");
                 });
 
             modelBuilder.Entity("BlueLife.Models.MedicineName", b =>
@@ -619,6 +715,18 @@ namespace BlueLife.Migrations
             modelBuilder.Entity("BlueLife.Models.OrderStatus", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.PharmacyWarehouse", b =>
+                {
+                    b.Navigation("Baskets");
+
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.ReleaseMedicine", b =>
+                {
+                    b.Navigation("PharmacyWarehouses");
                 });
 #pragma warning restore 612, 618
         }

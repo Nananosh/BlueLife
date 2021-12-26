@@ -1,0 +1,162 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+
+<body>
+<br/><br/><br/>
+<div id="example">
+    <div id="grid"></div>
+    <script>
+        $(document).ready(function() {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "@Url.Action("GetAllMedicine", "Admin")",
+                        update: {
+                            url: "@Url.Action("EditMedicine","Admin")",
+                            dataType: "json",
+                            type: "POST"
+                        },
+                        create:{
+                            url: "@Url.Action("AddMedicine","Admin")",
+                            dataType: "json",
+                            type: "POST"  
+                        },
+                        destroy: {
+                            url: "@Url.Action("DeleteMedicine","Admin")",
+                            dataType: "json",
+                            type: "DELETE"
+                        }
+                    },
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Id: { editable: false, from: "id", type: "number" },
+                                MedicineName: { from: "medicineName", validation: {required: true} }, 
+                                MedicineNameId: {from: "medicineNameId", validation: {required: true} },
+                                MedicineType: { from: "medicineType", validation: {required: true} },
+                                MedicineTypeId: {from: "medicineTypeId", validation: {required: true} }, 
+                                MedicineUnit: { from: "medicineUnit", validation: {required: true} },
+                                MedicineUnitId: {from: "medicineUnitId", validation: {required: true} }, 
+                                Volume: { from: "volume", type: "number", validation: {required: true }},
+                                Dosage: { from: "dosage", type: "float", validation: {required: true }}
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true
+                },
+                height: 550,
+                editable: {
+                    mode: "popup",
+                    window: {
+                        scrollable: false,
+                        resizable: false,
+                    }
+                },
+                // filterable: true,
+                // sortable: true,
+                pageable: true,
+                toolbar: [
+                    {name: "create"}
+                ],
+                columns: [
+                    {
+                        field:"Id",
+                        filterable: false
+                    },
+                    {
+                        field: "MedicineName.name",
+                        title: "Название препарата",
+                        editor: medicineNameEditor
+                    },
+                    {
+                        field: "MedicineType.type",
+                        title: "Тип препарата",
+                        editor: medicineTypeEditor
+                    }, 
+                    {
+                        field: "MedicineUnit.unit",
+                        title: "Единица измерения препарата",
+                        editor: medicineUnitEditor
+                    }, 
+                    {
+                        field: "Volume",
+                        title: "Объём препарата"
+                    }, 
+                    {
+                        field: "Dosage",
+                        title: "Дозировка препарата"
+                    },
+                    {
+                        command: "edit", 
+                    },
+                    {
+                        command: "destroy"
+                    }
+                ]
+            });
+        });
+        
+        function medicineNameEditor(container, options) {
+            $('<input required name="MedicineNameId">')
+                .appendTo(container)
+                .kendoDropDownList({
+                    dataTextField: "fullName",
+                    dataValueField: "id",
+                    height: 500,
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: "@Url.Action("GetAllMedicineName", "Admin")",
+                                dataType: "json",
+                                cache: false
+                            }
+                        }
+                    }
+                });
+        }
+        
+        function medicineTypeEditor(container, options) {
+            $('<input required name="MedicineTypeId">')
+                .appendTo(container)
+                .kendoDropDownList({
+                    dataTextField: "type",
+                    dataValueField: "id",
+                    height: 500,
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: "@Url.Action("GetAllMedicineType", "Admin")",
+                                dataType: "json",
+                                cache: false
+                            }
+                        }
+                    }
+                });
+        }
+        
+        function medicineUnitEditor(container, options) {
+            $('<input required name="MedicineUnitId">')
+                .appendTo(container)
+                .kendoDropDownList({
+                    dataTextField: "unit",
+                    dataValueField: "id",
+                    height: 500,
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: "@Url.Action("GetAllMedicineUnit", "Admin")",
+                                dataType: "json",
+                                cache: false
+                            }
+                        }
+                    }
+                });
+        }
+    </script>
+</div>
+</body>

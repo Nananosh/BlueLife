@@ -22,6 +22,9 @@ namespace BlueLife.Migrations
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderMedicine> OrderMedicine { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
+        public DbSet<PharmacyWarehouse> PharmacyWarehouses { get; set; }
+        public DbSet<CatalogMedicine> CatalogMedicine { get; set; }
+        public DbSet<ReleaseMedicine> ReleaseMedicine { get; set; }
         
     }
 }

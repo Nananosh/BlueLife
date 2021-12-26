@@ -6,6 +6,6 @@ namespace BlueLife.Models
     {
         public int Id { get; set; }
         public string Manufacturer { get; set; }
-        public List<Medicine> Medicines { get; set; }
+        public List<ReleaseMedicine> ReleaseMedicines { get; set; }
     }
 }

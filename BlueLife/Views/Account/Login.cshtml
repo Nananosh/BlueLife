@@ -1,8 +1,7 @@
-﻿@model BlueLife.ViewModels.LoginViewModel
+﻿@model BlueLife.ViewModels.Account.LoginViewModel
 
 @{
-    Layout = null;
-    ViewData["Title"] = "Sign In to Plushkin";
+    ViewData["Title"] = "Sign In to BlueLife";
 }
 <head>
     <meta charset="utf-8"/>
@@ -10,46 +9,40 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 </head>
 <br>
 <br>
 <br>
 <br>
-<div id="signIn" class="container p-xl-3">
-    <div class="row justify-content-lg-center">
-        <div class="col-lg-8 text-lg-center pb-4">
-            <a asp-action="Index" asp-controller="Home" style="text-decoration: none; color: black">
-                <h1 style="font-family: 'Abril Fatface', cursive;">MoreHealth</h1>
-            </a>
-            <h2 class="h4">Sign in to your account</h2>
-        </div>
+<div class="row">
+    <div class="col-md-6">
+        <img src="https://www.phila.gov/media/20200603112927/pharmacy-1050x700.jpg" alt="Image" class="img-fluid">
     </div>
-    <br>
-    <div class="row justify-content-lg-center">
-        <div class="col-lg-4 shadow pt-3 pb-1 mb-2 bg-white rounded">
-            <form class="form-group" method="post" asp-controller="Account" asp-action="Login"
-                  asp-route-returnUrl="@Model.ReturnUrl">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="UserName"></label>
-                    <input class="form-control shadow-sm bg-white rounded" asp-for="UserName" placeholder="Enter username">
-                    <span asp-validation-for="UserName" class="text-danger"></span>
+    <div class="col-md-6 contents">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="mb-4">
+                    <h3>Вход</h3>
+                    <p class="mb-4">Добро пожаловать в аптеку BlueLife</p>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input class="form-control shadow-sm bg-white rounded" asp-for="Password" placeholder="Enter password">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-block shadow-sm rounded">Sign In</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="row justify-content-lg-center pt-4">
-        <div class="col-lg-8 text-lg-center">
-            <h6 class="h6">New to Plushkin? <a asp-controller="Account" asp-action="Register">Create an account.</a></h6>
+                <form class="form-group" method="post" asp-controller="Account" asp-action="Login"
+                      asp-route-returnUrl="@Model.ReturnUrl">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input class="form-control shadow-sm bg-white rounded" asp-for="UserName" placeholder="Введите имя пользователя">
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input class="form-control shadow-sm bg-white rounded" asp-for="Password" placeholder="Введите пароль">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block shadow-sm rounded ">Войти</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

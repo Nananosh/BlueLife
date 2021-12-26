@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - BlueLife</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+
+     <link rel="stylesheet" href="~/lib/Kendo/styles/kendo.classic-opal.min.css"/>
+    <script src="~/lib/Kendo/js/jquery.min.js"></script>
+    <script src="~/lib/Kendo/js/kendo.all.min.js"></script>
+    <script src="~/lib/Kendo/js/kendo.timezones.min.js"></script>
+    <script src="~/lib/Kendo/js/cultures/kendo.culture.ru.min.js"></script>
+    <script src="~/lib/Kendo/js/messages/kendo.messages.ru-RU.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <div class="overlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse fixed-top" id="sidebar-wrapper" role="navigation">
+        <ul class="nav sidebar-nav">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <a asp-action="Index" asp-controller="Home">BlueLife</a>
+                </div>
+            </div>
+            <li>
+                <a asp-action="AdminPanel">Админ панель</a>
+            </li>
+            <li>
+                <a asp-action="AdminCatalogMedicine">Предназначение лекарства</a>
+            </li>
+            <li>
+                <a asp-action="AdminMedicineName">Название препарата</a>
+            </li>
+            <li>
+                <a asp-action="AdminMedicineType">Тип препарата</a>
+            </li>
+            <li>
+                <a asp-action="AdminMedicineUnit">Единица измерения препарата</a>
+            </li>
+            <li>
+                <a asp-action="AdminMedicineManufacturer">Производитель</a>
+            </li>
+            <li>
+                <a asp-action="AdminMedicine">Препарат</a>
+            </li>
+            <li>
+                <a asp-action="AdminReleaseMedicine">Выпуск препарата</a>
+            </li>
+            <li>
+                <a asp-action="AdminPharmacyWarehouses">Склад</a>
+            </li>
+            @* <li class="dropdown"> *@
+            @*     <a href="#works" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a> *@
+            @*     <ul class="dropdown-menu animated fadeInLeft" role="menu"> *@
+            @*         <div class="dropdown-header">Dropdown heading</div> *@
+            @*         <li> *@
+            @*             <a href="#pictures">Pictures</a> *@
+            @*         </li> *@
+            @*         <li> *@
+            @*             <a href="#videos">Videeos</a> *@
+            @*         </li> *@
+            @*         <li> *@
+            @*             <a href="#books">Books</a> *@
+            @*         </li> *@
+            @*         <li> *@
+            @*             <a href="#art">Art</a> *@
+            @*         </li> *@
+            @*         <li> *@
+            @*             <a href="#awards">Awards</a> *@
+            @*         </li> *@
+            @*     </ul> *@
+            @* </li> *@
+        </ul>
+    </nav>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <button type="button" class="hamburger animated fadeInLeft is-closed" data-toggle="offcanvas">
+            <span class="hamb-top"></span>
+            <span class="hamb-middle"></span>
+            <span class="hamb-bottom"></span>
+        </button>
+        <main role="main">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
