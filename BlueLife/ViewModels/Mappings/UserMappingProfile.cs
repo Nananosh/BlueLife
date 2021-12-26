@@ -18,6 +18,9 @@ namespace BlueLife.ViewModels.Mappings
                 .ForMember(dest => dest.CatalogMedicinesId,
                     opt => opt.MapFrom
                         (src => src.CatalogMedicinesId))
+                .ForMember(dest => dest.CatalogMedicines,
+                    opt => opt.MapFrom
+                        (src => src.CatalogMedicine))
                 .ForMember(dest => dest.Medicines,
                     opt => opt.Ignore()).ReverseMap();
             
@@ -96,6 +99,12 @@ namespace BlueLife.ViewModels.Mappings
                 .ForMember(dest => dest.Image,
                     opt => opt.MapFrom
                         (src => src.Image))
+                .ForMember(dest => dest.Manufacturer,
+                    opt => opt.MapFrom
+                        (src => src.Manufacturer))
+                .ForMember(dest => dest.Medicine,
+                    opt => opt.MapFrom
+                        (src => src.Medicine))
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom
                         (src => src.Description))
@@ -106,6 +115,27 @@ namespace BlueLife.ViewModels.Mappings
                     opt => opt.MapFrom
                         (src => src.ExpirationDate))
                 .ForMember(dest => dest.PharmacyWarehouses,
+                    opt => opt.Ignore()).ReverseMap();
+            
+            CreateMap<PharmacyWarehouseViewModel, PharmacyWarehouse>()
+                .ForMember(dest => dest.Id,
+                    opt => opt.MapFrom
+                        (src => src.Id))
+                .ForMember(dest => dest.ReleaseMedicine,
+                    opt => opt.MapFrom
+                        (src => src.ReleaseMedicine))
+                .ForMember(dest => dest.ReleaseMedicineId,
+                    opt => opt.MapFrom
+                        (src => src.ReleaseMedicineId))
+                .ForMember(dest => dest.Price,
+                    opt => opt.MapFrom
+                        (src => src.Price))
+                .ForMember(dest => dest.Quantity,
+                    opt => opt.MapFrom
+                        (src => src.Quantity))
+                .ForMember(dest => dest.Orders,
+                    opt => opt.Ignore())
+                .ForMember(dest => dest.Baskets,
                     opt => opt.Ignore()).ReverseMap();
         }
     }

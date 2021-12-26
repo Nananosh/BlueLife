@@ -31,7 +31,7 @@ namespace BlueLife
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IAdminService, AdminService>();
+            services.AddTransient<IAdminService, AdminService>();
             
             services.AddAutoMapper(typeof(UserMappingProfile));
             services.AddControllersWithViews();

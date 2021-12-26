@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace BlueLife.Models
 {
@@ -14,6 +15,7 @@ namespace BlueLife.Models
         public int MedicineUnitId { get; set; }
         public int Volume { get; set; }
         public double Dosage { get; set; }
+        [JsonIgnore]
         public List<ReleaseMedicine> ReleaseMedicines { get; set; }
     }
 }

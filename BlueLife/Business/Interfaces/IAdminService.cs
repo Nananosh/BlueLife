@@ -6,21 +6,37 @@ namespace BlueLife.Business.Interfaces
 {
     public interface IAdminService
     {
-        public void AddMedicineName(ApplicationContext db, MedicineName medicineName);
-        public void AddMedicineType(ApplicationContext db, MedicineType medicineType);
-        public void AddMedicineManufacturer(ApplicationContext db, MedicineManufacturer medicineManufacturer);
-        public void AddMedicineUnit(ApplicationContext db, MedicineUnit medicineUnit);
-        public void AddCatalogMedicine(ApplicationContext db, CatalogMedicine catalogMedicine);
-        public void AddMedicine(ApplicationContext db, Medicine medicine);
-        public void AddReleaseMedicine(ApplicationContext db, ReleaseMedicine releaseMedicine);
-        public void AddPharmacyWarehouse(ApplicationContext db, PharmacyWarehouse pharmacyWarehouse);
-        public IEnumerable GetAllCatalogMedicine(ApplicationContext db);
-        public IEnumerable GetAllMedicineType(ApplicationContext db);
-        public IEnumerable GetAllMedicineName(ApplicationContext db);
-        public IEnumerable GetAllMedicineUnit(ApplicationContext db);
-        public IEnumerable GetAllMedicineManufacturer(ApplicationContext db);
-        public IEnumerable GetAllMedicine(ApplicationContext db);
-        public IEnumerable GetAllPharmacyWarehouses(ApplicationContext db);
-
+        public MedicineName AddMedicineName(MedicineName medicineName);
+        public MedicineType AddMedicineType(MedicineType medicineType);
+        public MedicineManufacturer AddMedicineManufacturer(MedicineManufacturer medicineManufacturer);
+        public MedicineUnit AddMedicineUnit(MedicineUnit medicineUnit);
+        public CatalogMedicine AddCatalogMedicine(CatalogMedicine catalogMedicine);
+        public Medicine AddMedicine(Medicine medicine);
+        public ReleaseMedicine AddReleaseMedicine(ReleaseMedicine releaseMedicine);
+        public PharmacyWarehouse AddPharmacyWarehouse(PharmacyWarehouse pharmacyWarehouse);
+        public IEnumerable GetAllCatalogMedicine();
+        public IEnumerable GetAllMedicineType();
+        public IEnumerable GetAllMedicineName();
+        public IEnumerable GetAllMedicineUnit();
+        public IEnumerable GetAllMedicineManufacturer();
+        public IEnumerable GetAllMedicine();
+        public IEnumerable GetAllPharmacyWarehouses();
+        public IEnumerable GetAllReleaseMedicine();
+        public MedicineName EditMedicineName(MedicineName medicineName);
+        public MedicineType EditMedicineType(MedicineType medicineType);
+        public MedicineManufacturer EditMedicineManufacturer(MedicineManufacturer medicineManufacturer);
+        public MedicineUnit EditMedicineUnit(MedicineUnit medicineUnit);
+        public CatalogMedicine EditCatalogMedicine(CatalogMedicine catalogMedicine);
+        public Medicine EditMedicine(Medicine medicine);
+        public ReleaseMedicine EditReleaseMedicine(ReleaseMedicine releaseMedicine);
+        public PharmacyWarehouse EditPharmacyWarehouse(PharmacyWarehouse pharmacyWarehouse);
+        public void DeleteMedicineName(MedicineName medicineName);
+        public void DeleteMedicineType(MedicineType medicineType);
+        public void DeleteMedicineManufacturer(MedicineManufacturer medicineManufacturer);
+        public void DeleteMedicineUnit(MedicineUnit medicineUnit);
+        public void DeleteCatalogMedicine(CatalogMedicine catalogMedicine);
+        public void DeleteMedicine(Medicine medicine);
+        public void DeleteReleaseMedicine(ReleaseMedicine releaseMedicine);
+        public void DeletePharmacyWarehouse(PharmacyWarehouse pharmacyWarehouse);
     }
 }

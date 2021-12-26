@@ -11,53 +11,62 @@
     <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <br>
-<div id="register" class="container p-xl-3">
-    <div class="row justify-content-lg-center">
-        <div class="col-lg-5 shadow pt-3 pb-1 mb-2 bg-white rounded">
-            <form class="form-group" method="post" asp-controller="Account" asp-action="Register">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Email" placeholder="Введите почту">
-                    <span asp-validation-for="Email" class="text-danger"></span>
+<div class="row">
+    <div class="col-md-6 d-flex align-items-center">
+        <img src="https://pharmclub.uz/wp-content/uploads/2017/05/eb581c7f28f766d9e52977f7d2ec0e8e.jpg" alt="Image" class="img-fluid">
+    </div>
+    <div class="col-md-6 contents">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="mb-4">
+                    <h3>Регистрация</h3>
+                    <p class="mb-4">Добро пожаловать в аптеку BlueLife</p>
                 </div>
-                <div class="form-group">
-                    <label asp-for="UserName"></label>
-                    <input class="form-control form-control shadow-sm bg-white rounded" asp-for="UserName" placeholder="Введите имя пользователя">
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Name"></label>
-                    <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Name" placeholder="Введите имя">
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Surname"></label>
-                    <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Surname" placeholder="Введите фамилию">
-                    <span asp-validation-for="Surname" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Lastname"></label>
-                    <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Lastname" placeholder="Введите отчество">
-                    <span asp-validation-for="Lastname" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Password" placeholder="Введите пароль">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="PasswordConfirm"></label>
-                    <input class="form-control form-control shadow-sm bg-white rounded" asp-for="PasswordConfirm" placeholder="Повторите пароль">
-                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-                </div>
-                <div>
-                    <div class="form-group  pt-1">
-                        <button type="submit" class="btn btn-success btn-block shadow-sm rounded">Зарегистрироваться</button>
+                <form class="form-group" method="post" asp-controller="Account" asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Email" placeholder="Введите почту">
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input class="form-control form-control shadow-sm bg-white rounded" asp-for="UserName" placeholder="Введите имя пользователя">
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Name" placeholder="Введите имя">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Surname"></label>
+                        <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Surname" placeholder="Введите фамилию">
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Lastname"></label>
+                        <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Lastname" placeholder="Введите отчество">
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input class="form-control form-control shadow-sm bg-white rounded" asp-for="Password" placeholder="Введите пароль">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PasswordConfirm"></label>
+                        <input class="form-control form-control shadow-sm bg-white rounded" asp-for="PasswordConfirm" placeholder="Повторите пароль">
+                        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <div class="form-group  pt-1">
+                            <button type="submit" class="btn btn-primary btn-block shadow-sm rounded">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

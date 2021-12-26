@@ -6,6 +6,7 @@ using BlueLife.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlueLife.Controllers
 {
@@ -21,6 +22,12 @@ namespace BlueLife.Controllers
             _database = context;
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+        
+        public async Task<string> GetUserImage(string id)
+        {
+            var user = await _database.Users.SingleOrDefaultAsync(u => u.Id == id);
+            return user.UserImage;
         }
 
         [HttpGet]

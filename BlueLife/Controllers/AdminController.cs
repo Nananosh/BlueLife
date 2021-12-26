@@ -23,124 +23,267 @@ namespace BlueLife.Controllers
             this.mapper = mapper;
         }
 
-        public IActionResult AddMedicineName()
+        [HttpGet]
+        public IActionResult AdminCatalogMedicine()
         {
             return View();
         }
-
+        
+        [HttpGet]
+        public IActionResult AdminMedicineName()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult AdminMedicineUnit()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult AdminMedicineType()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult AdminMedicineManufacturer()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult AdminMedicine()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult AdminReleaseMedicine()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult AdminPharmacyWarehouses()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult AdminPanel()
+        {
+            return View();
+        }
+        
         [HttpPost]
         public IActionResult AddMedicineName(MedicineNameViewModel model)
         {
-            adminService.AddMedicineName(db,mapper.Map<MedicineName>(model));
-            return RedirectToAction();
-        }
-        
-        public IActionResult AddMedicineManufacturer()
-        {
-            return View();
+            var medicineName = adminService.AddMedicineName(mapper.Map<MedicineName>(model));
+            return Json(mapper.Map<MedicineNameViewModel>(medicineName));
         }
 
         [HttpPost]
         public IActionResult AddMedicineManufacturer(MedicineManufacturerViewModel model)
         {
-            adminService.AddMedicineManufacturer(db,mapper.Map<MedicineManufacturer>(model));
-            return RedirectToAction();
+            var medicineManufacturer = adminService.AddMedicineManufacturer(mapper.Map<MedicineManufacturer>(model));
+            return Json(mapper.Map<MedicineManufacturerViewModel>(medicineManufacturer));
         }
         
-        public IActionResult AddMedicineType()
-        {
-            return View();
-        }
 
         [HttpPost]
         public IActionResult AddMedicineType(MedicineTypeViewModel model)
         {
-            adminService.AddMedicineType(db,mapper.Map<MedicineType>(model));
-            return RedirectToAction();
-        }
-        
-        public IActionResult AddMedicineUnit()
-        {
-            return View();
+            var medicineType = adminService.AddMedicineType(mapper.Map<MedicineType>(model));
+            return Json(mapper.Map<MedicineTypeViewModel>(medicineType));;
         }
 
         [HttpPost]
         public IActionResult AddMedicineUnit(MedicineUnitViewModel model)
         {
-            adminService.AddMedicineUnit(db,mapper.Map<MedicineUnit>(model));
-            return RedirectToAction();
-        }
-        
-        public IActionResult AddCatalogMedicine()
-        {
-            return View();
+            var medicineUnit = adminService.AddMedicineUnit(mapper.Map<MedicineUnit>(model));
+            return Json(mapper.Map<MedicineUnitViewModel>(medicineUnit));
         }
 
         [HttpPost]
         public IActionResult AddCatalogMedicine(CatalogMedicineViewModel model)
         {
-            adminService.AddCatalogMedicine(db,mapper.Map<CatalogMedicine>(model));
-            return RedirectToAction();
-        }
-        
-        public IActionResult AddMedicine()
-        {
-            return View();
+            var catalogMedicine =  adminService.AddCatalogMedicine(mapper.Map<CatalogMedicine>(model));
+            return Json(mapper.Map<CatalogMedicineViewModel>(catalogMedicine));
         }
 
         [HttpPost]
         public IActionResult AddMedicine(MedicineViewModel model)
         {
-            adminService.AddMedicine(db,mapper.Map<Medicine>(model));
-            return RedirectToAction();
+            var medicine = adminService.AddMedicine(mapper.Map<Medicine>(model));
+            return Json(mapper.Map<MedicineViewModel>(medicine));
         }
-        
-        public IActionResult AddReleaseMedicine()
-        {
-            return View();
-        }
-        
+
         [HttpPost]
         public IActionResult AddReleaseMedicine(ReleaseMedicineViewModel model)
         {
-            adminService.AddReleaseMedicine(db,mapper.Map<ReleaseMedicine>(model));
-            return RedirectToAction();
+            var releaseMedicine = adminService.AddReleaseMedicine(mapper.Map<ReleaseMedicine>(model));
+            return Json(mapper.Map<ReleaseMedicineViewModel>(releaseMedicine));
+        }
+        
+        [HttpPost]
+        public IActionResult AddPharmacyWarehouses(PharmacyWarehouseViewModel model)
+        {
+            var pharmacyWarehouses = adminService.AddPharmacyWarehouse(mapper.Map<PharmacyWarehouse>(model));
+            return Json(mapper.Map<PharmacyWarehouseViewModel>(pharmacyWarehouses));
         }
 
         public IActionResult GetAllCatalogMedicine()
         {
-            var catalogMedicine = adminService.GetAllCatalogMedicine(db);
+            var catalogMedicine = adminService.GetAllCatalogMedicine();
             return Json(mapper.Map<IEnumerable<CatalogMedicineViewModel>>(catalogMedicine));
         }
         
         public IActionResult GetAllMedicineType()
         {
-            var medicineType = adminService.GetAllMedicineType(db);
+            var medicineType = adminService.GetAllMedicineType();
             return Json(mapper.Map<IEnumerable<MedicineTypeViewModel>>(medicineType));
         }
         
         public IActionResult GetAllMedicineName()
         {
-            var medicineName = adminService.GetAllMedicineName(db);
+            var medicineName = adminService.GetAllMedicineName();
             return Json(mapper.Map<IEnumerable<MedicineNameViewModel>>(medicineName));
         }
         
         public IActionResult GetAllMedicineUnit()
         {
-            var medicineUnit = adminService.GetAllMedicineUnit(db);
+            var medicineUnit = adminService.GetAllMedicineUnit();
             return Json(mapper.Map<IEnumerable<MedicineUnitViewModel>>(medicineUnit));
         }
         
         public IActionResult GetAllMedicineManufacturer()
         {
-            var medicineManufacturer = adminService.GetAllMedicineManufacturer(db);
+            var medicineManufacturer = adminService.GetAllMedicineManufacturer();
             return Json(mapper.Map<IEnumerable<MedicineManufacturerViewModel>>(medicineManufacturer));
         }
         
         public IActionResult GetAllMedicine()
         {
-            var medicine = adminService.GetAllMedicine(db);
+            var medicine = adminService.GetAllMedicine();
             return Json(mapper.Map<IEnumerable<MedicineViewModel>>(medicine));
+        }
+        public IActionResult GetAllPharmacyWarehouses()
+        {
+            var pharmacyWarehouses = adminService.GetAllPharmacyWarehouses();
+            return Json(mapper.Map<IEnumerable<PharmacyWarehouseViewModel>>(pharmacyWarehouses));
+        }
+        
+        public IActionResult GetAllReleaseMedicine()
+        {
+            var releaseMedicine = adminService.GetAllReleaseMedicine();
+            return Json(mapper.Map<IEnumerable<ReleaseMedicineViewModel>>(releaseMedicine));
+        }
+        
+        [HttpPost]
+        public IActionResult EditMedicineName(MedicineNameViewModel model)
+        {
+            var medicineName = adminService.EditMedicineName(mapper.Map<MedicineName>(model));
+            return Json(mapper.Map<MedicineNameViewModel>(medicineName));
+        }
+
+        [HttpPost]
+        public IActionResult EditMedicineManufacturer(MedicineManufacturerViewModel model)
+        {
+            var medicineManufacturer = adminService.EditMedicineManufacturer(mapper.Map<MedicineManufacturer>(model));
+            return Json(mapper.Map<MedicineManufacturerViewModel>(medicineManufacturer));
+        }
+        
+
+        [HttpPost]
+        public IActionResult EditMedicineType(MedicineTypeViewModel model)
+        {
+            var medicineType = adminService.EditMedicineType(mapper.Map<MedicineType>(model));
+            return Json(mapper.Map<MedicineTypeViewModel>(medicineType));;
+        }
+
+        [HttpPost]
+        public IActionResult EditMedicineUnit(MedicineUnitViewModel model)
+        {
+            var medicineUnit = adminService.EditMedicineUnit(mapper.Map<MedicineUnit>(model));
+            return Json(mapper.Map<MedicineUnitViewModel>(medicineUnit));
+        }
+
+        [HttpPost]
+        public IActionResult EditCatalogMedicine(CatalogMedicineViewModel model)
+        {
+            var catalogMedicine =  adminService.EditCatalogMedicine(mapper.Map<CatalogMedicine>(model));
+            return Json(mapper.Map<CatalogMedicineViewModel>(catalogMedicine));
+        }
+
+        [HttpPost]
+        public IActionResult EditMedicine(MedicineViewModel model)
+        {
+            var medicine = adminService.EditMedicine(mapper.Map<Medicine>(model));
+            return Json(mapper.Map<MedicineViewModel>(medicine));
+        }
+
+        [HttpPost]
+        public IActionResult EditReleaseMedicine(ReleaseMedicineViewModel model)
+        {
+            var releaseMedicine = adminService.EditReleaseMedicine(mapper.Map<ReleaseMedicine>(model));
+            return Json(mapper.Map<ReleaseMedicineViewModel>(releaseMedicine));
+        }
+        
+        [HttpPost]
+        public IActionResult EditPharmacyWarehouses(PharmacyWarehouseViewModel model)
+        {
+            var pharmacyWarehouses = adminService.EditPharmacyWarehouse(mapper.Map<PharmacyWarehouse>(model));
+            return Json(mapper.Map<PharmacyWarehouseViewModel>(pharmacyWarehouses));
+        }
+        
+        [HttpDelete]
+        public void DeleteMedicineName(MedicineNameViewModel model)
+        {
+            adminService.DeleteMedicineName(mapper.Map<MedicineName>(model));
+        }
+
+        [HttpDelete]
+        public void DeleteMedicineManufacturer(MedicineManufacturerViewModel model)
+        {
+            adminService.DeleteMedicineManufacturer(mapper.Map<MedicineManufacturer>(model));
+        }
+        
+        [HttpDelete]
+        public void DeleteMedicineType(MedicineTypeViewModel model)
+        {
+           adminService.DeleteMedicineType(mapper.Map<MedicineType>(model));
+        }
+
+        [HttpDelete]
+        public void DeleteMedicineUnit(MedicineUnitViewModel model)
+        {
+            adminService.DeleteMedicineUnit(mapper.Map<MedicineUnit>(model));
+        }
+
+        [HttpDelete]
+        public void DeleteCatalogMedicine(CatalogMedicineViewModel model)
+        {
+            adminService.DeleteCatalogMedicine(mapper.Map<CatalogMedicine>(model));
+        }
+
+        [HttpDelete]
+        public void DeleteMedicine(MedicineViewModel model)
+        {
+            adminService.DeleteMedicine(mapper.Map<Medicine>(model));
+        }
+
+        [HttpDelete]
+        public void DeleteReleaseMedicine(ReleaseMedicineViewModel model)
+        {
+            adminService.DeleteReleaseMedicine(mapper.Map<ReleaseMedicine>(model));
+        }
+        
+        [HttpDelete]
+        public void DeletePharmacyWarehouses(PharmacyWarehouseViewModel model)
+        {
+            adminService.DeletePharmacyWarehouse(mapper.Map<PharmacyWarehouse>(model));
         }
     }
 }

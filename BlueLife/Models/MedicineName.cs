@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace BlueLife.Models
 {
@@ -8,6 +9,7 @@ namespace BlueLife.Models
         public string Name { get; set; }
         public CatalogMedicine CatalogMedicines { get; set; }
         public int CatalogMedicinesId { get; set; }
+        [JsonIgnore]
         public List<Medicine> Medicines { get; set; }
     }
 }
