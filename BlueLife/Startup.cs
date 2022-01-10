@@ -32,7 +32,10 @@ namespace BlueLife
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IAdminService, AdminService>();
-            
+            services.AddTransient<IBuyMedicineService, BuyMedicineService>();
+            services.AddTransient<ISearchService, SearchService>();
+            services.AddScoped<ISeedDatabaseService, SeedDatabaseService>();
+
             services.AddAutoMapper(typeof(UserMappingProfile));
             services.AddControllersWithViews();
             

@@ -53,6 +53,11 @@ namespace BlueLife.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _database.Baskets.AddAsync(new Basket
+                    {
+                        User = user
+                    });
+                    await _database.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
