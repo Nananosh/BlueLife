@@ -91,3 +91,9 @@ C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Admi
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Admin\AdminPharmacyWarehouses.cshtml.g.cs
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Admin\AdminPanel.cshtml.g.cs
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyMedicine\Index.cshtml.g.cs
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyMedicine\Medicine.cshtml.g.cs
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyMedicine\Basket.cshtml.g.cs
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyMedicine\Orders.cshtml.g.cs
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyMedicine\Order.cshtml.g.cs
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Search\Index.cshtml.g.cs
