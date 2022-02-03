@@ -23,7 +23,7 @@ namespace BlueLife.ViewModels.Mappings
                         (src => src.CatalogMedicine))
                 .ForMember(dest => dest.Medicines,
                     opt => opt.Ignore()).ReverseMap();
-            
+
             CreateMap<MedicineManufacturerViewModel, MedicineManufacturer>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom
@@ -33,7 +33,7 @@ namespace BlueLife.ViewModels.Mappings
                         (src => src.Manufacturer))
                 .ForMember(dest => dest.ReleaseMedicines,
                     opt => opt.Ignore()).ReverseMap();
-            
+
             CreateMap<MedicineTypeViewModel, MedicineType>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom
@@ -43,7 +43,7 @@ namespace BlueLife.ViewModels.Mappings
                         (src => src.Type))
                 .ForMember(dest => dest.Medicines,
                     opt => opt.Ignore()).ReverseMap();
-            
+
             CreateMap<MedicineUnitViewModel, MedicineUnit>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom
@@ -53,7 +53,7 @@ namespace BlueLife.ViewModels.Mappings
                         (src => src.Unit))
                 .ForMember(dest => dest.Medicines,
                     opt => opt.Ignore()).ReverseMap();
-            
+
             CreateMap<CatalogMedicineViewModel, CatalogMedicine>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom
@@ -63,7 +63,7 @@ namespace BlueLife.ViewModels.Mappings
                         (src => src.NameCatalogMedicine))
                 .ForMember(dest => dest.MedicineNames,
                     opt => opt.Ignore()).ReverseMap();
-            
+
             CreateMap<MedicineViewModel, Medicine>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom
@@ -85,7 +85,7 @@ namespace BlueLife.ViewModels.Mappings
                         (src => src.Dosage))
                 .ForMember(dest => dest.ReleaseMedicines,
                     opt => opt.Ignore()).ReverseMap();
-            
+
             CreateMap<ReleaseMedicineViewModel, ReleaseMedicine>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom
@@ -116,7 +116,7 @@ namespace BlueLife.ViewModels.Mappings
                         (src => src.ExpirationDate))
                 .ForMember(dest => dest.PharmacyWarehouses,
                     opt => opt.Ignore()).ReverseMap();
-            
+
             CreateMap<PharmacyWarehouseViewModel, PharmacyWarehouse>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom
@@ -137,6 +137,9 @@ namespace BlueLife.ViewModels.Mappings
                     opt => opt.Ignore())
                 .ForMember(dest => dest.Baskets,
                     opt => opt.Ignore()).ReverseMap();
+
+            CreateMap<OrderStatusViewModel, OrderStatus>().ReverseMap();
+            CreateMap<OrderViewModel, Order>().ReverseMap();
         }
     }
 }

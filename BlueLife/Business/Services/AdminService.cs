@@ -191,6 +191,20 @@ namespace BlueLife.Business.Services
             return releaseMedicines;
         }
 
+        public IEnumerable GetAllOrders()
+        {
+            var orders = db.Order.Include(x => x.User).Include(x => x.OrderStatus);
+
+            return orders;
+        }
+
+        public IEnumerable GetAllOrderStatus()
+        {
+            var orderStatus = db.OrderStatus;
+
+            return orderStatus;
+        }
+
         public MedicineName EditMedicineName(MedicineName medicineName)
         {
             var editMedicineName = db.MedicineName.FirstOrDefault(x => x.Id == medicineName.Id);
@@ -324,6 +338,7 @@ namespace BlueLife.Business.Services
                 editPharmacyWarehouse.Price = pharmacyWarehouse.Price;
                 editPharmacyWarehouse.Quantity = pharmacyWarehouse.Quantity;
                 editPharmacyWarehouse.ReleaseMedicineId = pharmacyWarehouse.ReleaseMedicineId;
+                editPharmacyWarehouse.IsRecipe = pharmacyWarehouse.IsRecipe;
                 db.SaveChanges();
             }
 
@@ -343,6 +358,21 @@ namespace BlueLife.Business.Services
                 .FirstOrDefault(x => x.Id == editPharmacyWarehouse.Id);
 
             return editedPharmacyWarehouse;
+        }
+
+        public Order EditOrder(Order order)
+        {
+            var editOrder = db.Order.FirstOrDefault(x => x.Id == order.Id);
+            if (editOrder != null)
+            {
+                editOrder.OrderStatusId = order.OrderStatusId;
+                db.SaveChanges();
+            }
+
+            var editedOrder = db.Order.Include(x => x.User).Include(x => x.OrderStatus)
+                .FirstOrDefault(x => x.Id == editOrder.Id);
+
+            return editedOrder;
         }
 
         public void DeleteMedicineName(MedicineName medicineName)

@@ -181,6 +181,18 @@ namespace BlueLife.Controllers
             return Json(mapper.Map<IEnumerable<ReleaseMedicineViewModel>>(releaseMedicine));
         }
         
+        public IActionResult GetAllOrders()
+        {
+            var orders = adminService.GetAllOrders();
+            return Json(mapper.Map<IEnumerable<OrderViewModel>>(orders));
+        }
+        
+        public IActionResult GetAllOrderStatus()
+        {
+            var orderStatus = adminService.GetAllOrderStatus();
+            return Json(mapper.Map<IEnumerable<OrderStatus>>(orderStatus));
+        }
+        
         [HttpPost]
         public IActionResult EditMedicineName(MedicineNameViewModel model)
         {
@@ -236,6 +248,13 @@ namespace BlueLife.Controllers
         {
             var pharmacyWarehouses = adminService.EditPharmacyWarehouse(mapper.Map<PharmacyWarehouse>(model));
             return Json(mapper.Map<PharmacyWarehouseViewModel>(pharmacyWarehouses));
+        }
+        
+        [HttpPost]
+        public IActionResult EditOrder(Order model)
+        {
+            var order = adminService.EditOrder(mapper.Map<Order>(model));
+            return Json(mapper.Map<OrderViewModel>(order));
         }
         
         [HttpDelete]
