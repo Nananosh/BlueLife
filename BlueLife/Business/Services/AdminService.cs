@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 using BlueLife.Business.Interfaces;
 using BlueLife.Migrations;
 using BlueLife.Models;
@@ -360,17 +361,27 @@ namespace BlueLife.Business.Services
             return editedPharmacyWarehouse;
         }
 
+        private async Task SendEditOrderStatusEmail(User user, string lastStatus, Order order)
+        {
+            EmailConfim emailService = new EmailConfim();
+            await emailService.SendEmailDefault(user.Email, $"Заказ №{order.Id}",
+                $"Статус вашего заказа изменился с  \"{lastStatus}\" на \"{order.OrderStatus.Status}\".");
+        }
+        
         public Order EditOrder(Order order)
         {
-            var editOrder = db.Order.FirstOrDefault(x => x.Id == order.Id);
+            var editOrder = db.Order.Include(x => x.OrderStatus).FirstOrDefault(x => x.Id == order.Id);
+            var lastStatus = editOrder.OrderStatus.Status;
             if (editOrder != null)
             {
                 editOrder.OrderStatusId = order.OrderStatusId;
                 db.SaveChanges();
             }
-
+            
             var editedOrder = db.Order.Include(x => x.User).Include(x => x.OrderStatus)
                 .FirstOrDefault(x => x.Id == editOrder.Id);
+            var user = db.Users.FirstOrDefault(x => x.Id == editedOrder.UserId);
+            SendEditOrderStatusEmail(user, lastStatus, editedOrder);
 
             return editedOrder;
         }
