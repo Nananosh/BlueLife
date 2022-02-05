@@ -3,27 +3,27 @@
 }
 
 <body>
-       <br/><br/><br/>
-       <div id="example">
-           <div id="grid"></div>
-           <script>
+<br/><br/><br/>
+<div id="example">
+    <div id="grid"></div>
+    <script>
                $(document).ready(function() {
                    $("#grid").kendoGrid({
                        dataSource: {
                            transport: {
                                read: "@Url.Action("GetAllPharmacyWarehouses", "Admin")",
                                update: {
-                                   url: "@Url.Action("EditPharmacyWarehouses","Admin")",
+                                   url: "@Url.Action("EditPharmacyWarehouses", "Admin")",
                                    dataType: "json",
                                    type: "POST"
                                },
                                create:{
-                                   url: "@Url.Action("AddPharmacyWarehouses","Admin")",
+                                   url: "@Url.Action("AddPharmacyWarehouses", "Admin")",
                                    dataType: "json",
                                    type: "POST"  
                                },
                                destroy: {
-                                   url: "@Url.Action("DeletePharmacyWarehouses","Admin")",
+                                   url: "@Url.Action("DeletePharmacyWarehouses", "Admin")",
                                    dataType: "json",
                                    type: "DELETE"
                                }
@@ -37,6 +37,7 @@
                                        ReleaseMedicineId: {from: "releaseMedicineId", validation: {required: true} },
                                        Price: { from: "price", type: "number", validation: {required: true }},
                                        Quantity: { from: "quantity", type: "number", validation: {required: true }},
+                                       IsRecipe: { from: "isRecipe", type: "boolean"}
                                    }
                                }
                            },
@@ -72,6 +73,10 @@
                                title: "Количество"
                            },
                            {
+                               field: "IsRecipe",
+                               title: "Рецепт"  
+                           },
+                           {
                                command: "edit", 
                            },
                            {
@@ -100,5 +105,5 @@
                        });
                }
            </script>
-       </div>
-       </body>
+</div>
+</body>

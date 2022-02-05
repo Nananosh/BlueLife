@@ -1,3 +1,106 @@
 ﻿@{
     Layout = "_AdminLayout";
 }
+@{
+    Layout = "_AdminLayout";
+}
+
+<body>
+<br/><br/><br/>
+<div id="example">
+    <div id="grid"></div>
+    <script>
+               $(document).ready(function() {
+                   $("#grid").kendoGrid({
+                       dataSource: {
+                           transport: {
+                               read: "@Url.Action("GetAllOrders", "Admin")",
+                               update: {
+                                   url: "@Url.Action("EditOrder", "Admin")",
+                                   dataType: "json",
+                                   type: "POST"
+                               }
+                           },
+                           schema: {
+                               model: {
+                                   id: "Id",
+                                   fields: {
+                                       Id: { editable: false, from: "id", type: "number" },
+                                       User: { editable: false, from: "user", validation: {required: true} }, 
+                                       OrderDate: { editable: false, from: "orderDate", type: "date", validation: {required: true }},
+                                       TotalAmount: { editable: false, from: "totalAmount", type: "number"},
+                                       OrderStatus: { from: "orderStatus"},
+                                       OrderStatusId: { from: "orderStatusId", type: "number"}
+                                   }
+                               }
+                           },
+                           pageSize: 20,
+                           serverPaging: true,
+                           serverFiltering: true,
+                           serverSorting: true
+                       },
+                       height: 550,
+                       editable: "popup",
+                       // filterable: true,
+                       // sortable: true,
+                       pageable: true,
+                       columns: [
+                           {
+                               field:"Id",
+                               filterable: false,
+                               title: "Номер заказа"
+                           },
+                           {
+                               field: "User",
+                               editable: false,
+                               title: "ФИО",
+                               template: function(dataItem) {
+                                   if (dataItem.User == null)
+                                       return '';
+                                   else
+                                       var fio = dataItem.User.surname + " " + dataItem.User.name + " " + dataItem.User.lastName;
+                                       return fio;
+                               }
+                           },
+                           {
+                               field: "OrderDate",
+                               title: "Дата заказа",
+                               format:"{0:dd/MM/yyyy HH:MM}"
+                           },
+                           {
+                               field: "TotalAmount",
+                               title: "Сумма к оплате"  
+                           },
+                           {
+                               field: "OrderStatus.status",
+                               title: "Статус",
+                               editor: orderStatusEditor,
+                           },
+                           {
+                               command: "edit", 
+                           },
+                       ]
+                   });
+               });
+               
+               function orderStatusEditor(container, options) {
+                   $('<input required name="OrderStatusId">')
+                       .appendTo(container)
+                       .kendoDropDownList({
+                           dataTextField: "status",
+                           dataValueField: "id",
+                           height: 500,
+                           dataSource: {
+                               transport: {
+                                   read: {
+                                       url: "@Url.Action("GetAllOrderStatus", "Admin")",
+                                       dataType: "json",
+                                       cache: false
+                                   }
+                               }
+                           }
+                       });
+               }
+           </script>
+</div>
+</body>

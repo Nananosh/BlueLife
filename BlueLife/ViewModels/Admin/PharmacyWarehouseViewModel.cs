@@ -9,5 +9,6 @@ namespace BlueLife.ViewModels.Admin
         public int ReleaseMedicineId { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
+        public bool IsRecipe { get; set; }
     }
 }

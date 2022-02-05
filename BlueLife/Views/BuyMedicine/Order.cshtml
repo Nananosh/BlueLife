@@ -1,7 +1,7 @@
 ﻿@model List<OrderMedicine>
 
 <div class="content">
-    @{ int totalAmount = 0;}
+    @{ int totalAmount = 0; }
     <div class="h2">Заказ №@Model[0].OrderId</div>
     @foreach (var medicine in @Model)
     {
@@ -13,7 +13,13 @@
                 <img src="@medicine.PharmacyWarehouse.ReleaseMedicine.Image" alt="medicine" style="height: 150px;width: 150px;"/>
             </div>
             <div class="col-lg-4">
-                <div class="h5"><a asp-action="Medicine" asp-controller="BuyMedicine" asp-route-id="@medicine.PharmacyWarehouse.Id">@medicine.PharmacyWarehouse.ReleaseMedicine.Medicine.MedicineName.Name</a></div>
+                @if (@medicine.PharmacyWarehouse.IsRecipe)
+                {
+                    <span class="text-danger">Для этого лекарства требуется рецепт</span>
+                }
+                <div class="h5">
+                    <a asp-action="Medicine" asp-controller="BuyMedicine" asp-route-id="@medicine.PharmacyWarehouse.Id">@medicine.PharmacyWarehouse.ReleaseMedicine.Medicine.MedicineName.Name</a>
+                </div>
                 <div>Количесво : @medicine.Quantity</div>
                 <div>Стоимость : @medicine.PharmacyWarehouse.Price</div>
             </div>
@@ -22,7 +28,8 @@
     <div class="row mt-5">
         <div class="col-lg-12 d-flex justify-content-end align-items-baseline">
             <p>Итоговая сумма : </p>
-            <p class="text-success h3 ml-2">@totalAmount</p><div class="h4 ml-1">BYN</div>
+            <p class="text-success h3 ml-2">@totalAmount</p>
+            <div class="h4 ml-1">BYN</div>
         </div>
     </div>
 </div>

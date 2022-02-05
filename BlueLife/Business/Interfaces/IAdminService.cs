@@ -22,6 +22,8 @@ namespace BlueLife.Business.Interfaces
         public IEnumerable GetAllMedicine();
         public IEnumerable GetAllPharmacyWarehouses();
         public IEnumerable GetAllReleaseMedicine();
+        public IEnumerable GetAllOrders();
+        public IEnumerable GetAllOrderStatus();
         public MedicineName EditMedicineName(MedicineName medicineName);
         public MedicineType EditMedicineType(MedicineType medicineType);
         public MedicineManufacturer EditMedicineManufacturer(MedicineManufacturer medicineManufacturer);
@@ -30,6 +32,7 @@ namespace BlueLife.Business.Interfaces
         public Medicine EditMedicine(Medicine medicine);
         public ReleaseMedicine EditReleaseMedicine(ReleaseMedicine releaseMedicine);
         public PharmacyWarehouse EditPharmacyWarehouse(PharmacyWarehouse pharmacyWarehouse);
+        public Order EditOrder(Order order);
         public void DeleteMedicineName(MedicineName medicineName);
         public void DeleteMedicineType(MedicineType medicineType);
         public void DeleteMedicineManufacturer(MedicineManufacturer medicineManufacturer);

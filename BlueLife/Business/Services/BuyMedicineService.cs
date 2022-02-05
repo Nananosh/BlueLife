@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BlueLife.Business.Interfaces;
 using BlueLife.Migrations;
 using BlueLife.Models;
@@ -99,8 +100,16 @@ namespace BlueLife.Business.Services
             return totalAmount;
         }
 
+        private async Task SendBuyEmail(User user, Order order)
+        {
+            EmailConfim emailService = new EmailConfim();
+            await emailService.SendEmailDefault(user.Email, $"Заказ №{order.Id}",
+                $"Спасибо за покупку! Ваш заказ находится в статусе \"{order.OrderStatus.Status}\".");
+        }
+
         private int AddOrder(string userId)
         {
+            var user = db.Users.FirstOrDefault(x => x.Id == userId);
             var order = new Order
             {
                 UserId = userId,
@@ -111,6 +120,8 @@ namespace BlueLife.Business.Services
             };
             db.Order.Add(order);
             db.SaveChanges();
+            var addedOrder = db.Order.Include(x => x.OrderStatus).FirstOrDefault(x => x.Id == order.Id);
+            SendBuyEmail(user, addedOrder);
             return order.Id;
         }
 
@@ -163,7 +174,8 @@ namespace BlueLife.Business.Services
         public void DeleteMedicineInBasket(int id, string userId)
         {
             var basket = db.Baskets.FirstOrDefault(x => x.User.Id == userId);
-            var medicine = db.BasketMedicine.FirstOrDefault(x => x.PharmacyWarehouse.Id == id && x.Basket.User.Id == userId);
+            var medicine =
+                db.BasketMedicine.FirstOrDefault(x => x.PharmacyWarehouse.Id == id && x.Basket.User.Id == userId);
             if (medicine != null) db.BasketMedicine.Remove(medicine);
             db.SaveChanges();
         }

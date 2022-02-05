@@ -12,6 +12,10 @@
                 <img src="@medicine.PharmacyWarehouse.ReleaseMedicine.Image" alt="medicine" style="height: 150px;width: 150px;"/>
             </div>
             <div class="col-lg-4">
+                @if (@medicine.PharmacyWarehouse.IsRecipe)
+                                {
+                                    <span class="text-danger">Для этого лекарства требуется рецепт</span>
+                                }
                 <div class="h5">
                     <a asp-action="Medicine" asp-controller="BuyMedicine" asp-route-id="@medicine.PharmacyWarehouse.Id">@medicine.PharmacyWarehouse.ReleaseMedicine.Medicine.MedicineName.Name</a>
                 </div>

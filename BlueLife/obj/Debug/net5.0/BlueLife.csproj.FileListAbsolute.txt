@@ -97,3 +97,6 @@ C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyM
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyMedicine\Orders.cshtml.g.cs
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\BuyMedicine\Order.cshtml.g.cs
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Search\Index.cshtml.g.cs
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\bin\Debug\net5.0\MailKit.dll
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\bin\Debug\net5.0\MimeKit.dll
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\bin\Debug\net5.0\BouncyCastle.Crypto.dll

@@ -6,6 +6,10 @@
         </div>
         <div class="col-lg-6">
             <h4 class="card-title">@Model.ReleaseMedicine.Medicine.MedicineName.Name</h4>
+            @if (@Model.IsRecipe)
+            {
+                <span class="text-danger">Для этого лекарства требуется рецепт</span>
+            }
             <div class="price text-success mt-4">
                 <h5 >@Model.Price BYN</h5>
             </div>
@@ -131,9 +135,11 @@
 <script>
 $(document).ready(function(){
 		    $('#count').prop('disabled', true);
-   			$(document).on('click','.plus',function(){
-				$('#count').val(parseInt($('#count').val()) + 1 );
-    		});
+   			 $(document).on('click', '.plus', function () {
+                        if ($('#count').val() < @Model.Quantity) {
+                            $('#count').val(parseInt($('#count').val()) + 1);
+                        }
+                    });
         	$(document).on('click','.minus',function(){
     			$('#count').val(parseInt($('#count').val()) - 1 );
     				if ($('#count').val() == 0) {
