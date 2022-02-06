@@ -14,17 +14,35 @@ namespace BlueLife.Controllers
     public class BuyMedicineController : Controller
     {
         private readonly IBuyMedicineService buyMedicineService;
+        private readonly IAdminService adminService;
         private readonly IMapper mapper;
 
-        public BuyMedicineController(ApplicationContext db, IBuyMedicineService buyMedicineService, IMapper mapper)
+        public BuyMedicineController(ApplicationContext db, IBuyMedicineService buyMedicineService, IMapper mapper, IAdminService adminService)
         {
             this.buyMedicineService = buyMedicineService;
             this.mapper = mapper;
+            this.adminService = adminService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string medicineType, string sort)
         {
-            var medicines = buyMedicineService.GetAllPharmacyWarehouse();
+            ViewBag.AllMedicineType = adminService.GetAllMedicineType();
+            List<PharmacyWarehouse> medicines = null;
+            if (sort == "increasing")
+            {
+                medicines = buyMedicineService.GetAllPharmacyWarehouseOrderDescendingByMedicineName();
+                return View(mapper.Map<List<PharmacyWarehouseViewModel>>(medicines));
+            }
+            if (medicineType == null)
+            {
+                medicines = buyMedicineService.GetAllPharmacyWarehouse();
+                return View(mapper.Map<List<PharmacyWarehouseViewModel>>(medicines));
+            }
+            else
+            {
+                medicines = buyMedicineService.GetAllPharmacyWarehouseByMedicineType(medicineType);
+            }
+            
             return View(mapper.Map<List<PharmacyWarehouseViewModel>>(medicines));
         }
 
@@ -40,10 +58,17 @@ namespace BlueLife.Controllers
             return RedirectToAction("Medicine", "BuyMedicine",
                 new {id = basketMedicineViewModel.MedicineInPharmacyWarehouseId});
         }
+        
+        public IActionResult AddMedicineToBasketInIndex(BasketMedicineViewModel basketMedicineViewModel)
+        {
+            buyMedicineService.AddMedicineToBasket(basketMedicineViewModel);
+            return RedirectToAction("Index", "BuyMedicine");
+        }
 
         public IActionResult Basket(string id)
         {
             var basket = buyMedicineService.GetUserBasket(id);
+            ViewBag.FullPriceByDiscount = buyMedicineService.GetTotalAmountByUserId(id);
             return View(basket);
         }
 

@@ -38,6 +38,47 @@ namespace BlueLife.Business.Services
             return pharmacyWarehouse;
         }
 
+        public List<PharmacyWarehouse> GetAllPharmacyWarehouseByMedicineType(string medicineType)
+        {
+            var pharmacyWarehouse = db.PharmacyWarehouses
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Manufacturer)
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Medicine)
+                .ThenInclude(x => x.MedicineName)
+                .ThenInclude(x => x.CatalogMedicines)
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Medicine)
+                .ThenInclude(x => x.MedicineType)
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Medicine)
+                .ThenInclude(x => x.MedicineUnit)
+                .Where(x => x.ReleaseMedicine.Medicine.MedicineType.Type == medicineType).ToList();
+
+            return pharmacyWarehouse;
+        }
+
+        public List<PharmacyWarehouse> GetAllPharmacyWarehouseOrderDescendingByMedicineName()
+        {
+            var pharmacyWarehouse = db.PharmacyWarehouses
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Manufacturer)
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Medicine)
+                .ThenInclude(x => x.MedicineName)
+                .ThenInclude(x => x.CatalogMedicines)
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Medicine)
+                .ThenInclude(x => x.MedicineType)
+                .Include(x => x.ReleaseMedicine)
+                .ThenInclude(x => x.Medicine)
+                .ThenInclude(x => x.MedicineUnit)
+                .OrderBy(x => x.ReleaseMedicine.Medicine.MedicineName.Name)
+                .ToList();
+
+            return pharmacyWarehouse;
+        }
+
         public PharmacyWarehouse GetPharmacyWarehouseById(int id)
         {
             var pharmacyWarehouse = db.PharmacyWarehouses
@@ -93,11 +134,12 @@ namespace BlueLife.Business.Services
             return userBasket;
         }
 
-        private int GetTotalAmountByUserId(string userId)
+        public int GetTotalAmountByUserId(string userId)
         {
             var totalAmount = db.BasketMedicine.Where(x => x.Basket.User.Id == userId)
                 .Sum(x => x.Quantity * x.PharmacyWarehouse.Price);
-            return totalAmount;
+            var totalAmountByUserDiscount = GetFullPriceByDiscountUser(userId, totalAmount);
+            return totalAmountByUserDiscount;
         }
 
         private async Task SendBuyEmail(User user, Order order)
@@ -120,6 +162,7 @@ namespace BlueLife.Business.Services
             };
             db.Order.Add(order);
             db.SaveChanges();
+            AddDiscountUser(userId);
             var addedOrder = db.Order.Include(x => x.OrderStatus).FirstOrDefault(x => x.Id == order.Id);
             SendBuyEmail(user, addedOrder);
             return order.Id;
@@ -139,6 +182,8 @@ namespace BlueLife.Business.Services
                     OrderId = orderId,
                     Quantity = basketMedicine.Quantity
                 });
+
+                basketMedicine.PharmacyWarehouse.Quantity -= basketMedicine.Quantity;
             }
 
             db.RemoveRange(basket);
@@ -178,6 +223,19 @@ namespace BlueLife.Business.Services
                 db.BasketMedicine.FirstOrDefault(x => x.PharmacyWarehouse.Id == id && x.Basket.User.Id == userId);
             if (medicine != null) db.BasketMedicine.Remove(medicine);
             db.SaveChanges();
+        }
+
+        private void AddDiscountUser(string userId)
+        {
+            var user = db.Users.FirstOrDefault(x => x.Id == userId);
+            if (user != null) user.Discount += 1;
+            db.SaveChanges();
+        }
+
+        private int GetFullPriceByDiscountUser(string userId, int fullPrice)
+        {
+            var user = db.Users.FirstOrDefault(x => x.Id == userId);
+            return fullPrice - (fullPrice * user.Discount / 100);
         }
     }
 }
