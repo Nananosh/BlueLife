@@ -33,7 +33,7 @@ namespace BlueLife.Business.Services
                 .ThenInclude(x => x.MedicineType)
                 .Include(x => x.ReleaseMedicine)
                 .ThenInclude(x => x.Medicine)
-                .ThenInclude(x => x.MedicineUnit).ToList();
+                .ThenInclude(x => x.MedicineUnit).Where(x => x.Quantity != 0).ToList();
 
             return pharmacyWarehouse;
         }
@@ -53,7 +53,7 @@ namespace BlueLife.Business.Services
                 .Include(x => x.ReleaseMedicine)
                 .ThenInclude(x => x.Medicine)
                 .ThenInclude(x => x.MedicineUnit)
-                .Where(x => x.ReleaseMedicine.Medicine.MedicineType.Type == medicineType).ToList();
+                .Where(x => x.ReleaseMedicine.Medicine.MedicineType.Type == medicineType).Where(x => x.Quantity != 0).ToList();
 
             return pharmacyWarehouse;
         }
@@ -74,6 +74,7 @@ namespace BlueLife.Business.Services
                 .ThenInclude(x => x.Medicine)
                 .ThenInclude(x => x.MedicineUnit)
                 .OrderBy(x => x.ReleaseMedicine.Medicine.MedicineName.Name)
+                .Where(x => x.Quantity != 0)
                 .ToList();
 
             return pharmacyWarehouse;

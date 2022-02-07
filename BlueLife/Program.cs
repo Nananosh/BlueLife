@@ -34,6 +34,7 @@ namespace BlueLife
             {
                 await seed.CreateStartRole();
                 seed.CreateStartOrderStatus();
+                await seed.CreateStartAdmin();
             }
         }
     }

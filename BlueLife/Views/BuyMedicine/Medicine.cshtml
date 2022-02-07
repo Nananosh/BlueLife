@@ -1,70 +1,72 @@
 ﻿@model BlueLife.ViewModels.Admin.PharmacyWarehouseViewModel
-<div class="content">
-    <div class="row mt-5">
-        <div class="col-lg-6">
-            <img class="border shadow" src="@Model.ReleaseMedicine.Image" alt="@Model.ReleaseMedicine.Medicine.MedicineName.Name image" style="height: 500px;width: 500px;">
-        </div>
-        <div class="col-lg-6">
-            <h4 class="card-title">@Model.ReleaseMedicine.Medicine.MedicineName.Name</h4>
-            @if (@Model.IsRecipe)
-            {
-                <span class="text-danger">Для этого лекарства требуется рецепт</span>
-            }
-            <div class="price text-success mt-4">
-                <h5 >@Model.Price BYN</h5>
+<div class="container">
+    <div class="content">
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <img class="border shadow" src="@Model.ReleaseMedicine.Image" alt="@Model.ReleaseMedicine.Medicine.MedicineName.Name image" style="height: 500px;width: 500px;">
             </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <form method="post" asp-controller="BuyMedicine" asp-action="AddMedicineToBasket">
-                    <div class="d-flex justify-content-start align-items-center mt-4">
-                        <div class="qty">
-                            <input type="hidden" name="UserId" value="@User.Claims.ElementAt(0).Value"/>
-                            <input type="hidden" name="MedicineInPharmacyWarehouseId" value="@Model.Id"/>
-                            <input id="quantity" type="hidden" name="Quantity" value="1"/>
-                            <span class="minus bg-dark">-</span>
-                            <input id="count" class="count" name="qty" value="1"/>
-                            <span class="plus bg-dark">+</span>
+            <div class="col-lg-6">
+                <h4 class="card-title">@Model.ReleaseMedicine.Medicine.MedicineName.Name</h4>
+                @if (@Model.IsRecipe)
+                {
+                    <span class="text-danger">Для этого лекарства требуется рецепт</span>
+                }
+                <div class="price text-success mt-4">
+                    <h5 >@Model.Price BYN</h5>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form method="post" asp-controller="BuyMedicine" asp-action="AddMedicineToBasket">
+                        <div class="d-flex justify-content-start align-items-center mt-4">
+                            <div class="qty">
+                                <input type="hidden" name="UserId" value="@User.Claims.ElementAt(0).Value"/>
+                                <input type="hidden" name="MedicineInPharmacyWarehouseId" value="@Model.Id"/>
+                                <input id="quantity" type="hidden" name="Quantity" value="1"/>
+                                <span class="minus bg-dark">-</span>
+                                <input id="count" class="count" name="qty" value="1"/>
+                                <span class="plus bg-dark">+</span>
+                            </div>
+                            <button class="btn btn-success" type="submit">В корзину</button>
                         </div>
-                        <button class="btn btn-success" type="submit">В корзину</button>
-                    </div>
-                </form>
-            }
-            <div class="mt-4 d-flex flex-row align-items-baseline">
-                <div class="h5">В наличии :</div>
-                <p class="ml-1">@Model.Quantity</p>
-            </div>
-            <div class="mt-2 d-flex flex-row align-items-baseline">
-                <div class="h5">Производитель :</div>
-                <p class="ml-1">@Model.ReleaseMedicine.Manufacturer.Manufacturer</p>
-            </div>
-            <div class="mt-2 d-flex flex-row align-items-baseline">
-                <div class="h5">Форма выпуска :</div>
-                <p class="ml-1">@Model.ReleaseMedicine.Medicine.MedicineType.Type</p>
-            </div>
-            <div class="mt-2 d-flex flex-row align-items-baseline">
-                <div class="h5">Объём :</div>
-                <p class="ml-1">@Model.ReleaseMedicine.Medicine.Volume</p>
-                <p class="ml-1">@Model.ReleaseMedicine.Medicine.MedicineUnit.Unit</p>
-            </div>
-            <div class="mt-2 d-flex flex-row align-items-baseline">
-                <div class="h5">Предназначение :</div>
-                <p class="ml-1">@Model.ReleaseMedicine.Medicine.MedicineName.CatalogMedicines.NameCatalogMedicine</p>
-            </div>
-            <div class="mt-2 d-flex flex-row align-items-baseline">
-                <div class="h5">Дозировка :</div>
-                <p class="ml-1">@Model.ReleaseMedicine.Medicine.Dosage мг</p>
-            </div>
-            <div class="mt-2 d-flex flex-row align-items-baseline">
-                <div class="h5">Дата выпуска :</div>
-                <p class="ml-1">@Model.ReleaseMedicine.ReleaseDate</p>
-            </div>
-            <div class="mt-2 d-flex flex-row align-items-baseline">
-                <div class="h5">Срок годности :</div>
-                <p class="ml-1">@Model.ReleaseMedicine.ExpirationDate</p>
-            </div>
-            <div class="mt-2">
-                <div class="h5">Описание :</div>
-                <p>@Model.ReleaseMedicine.Description</p>
+                    </form>
+                }
+                <div class="mt-4 d-flex flex-row align-items-baseline">
+                    <div class="h5">В наличии :</div>
+                    <p class="ml-1">@Model.Quantity</p>
+                </div>
+                <div class="mt-2 d-flex flex-row align-items-baseline">
+                    <div class="h5">Производитель :</div>
+                    <p class="ml-1">@Model.ReleaseMedicine.Manufacturer.Manufacturer</p>
+                </div>
+                <div class="mt-2 d-flex flex-row align-items-baseline">
+                    <div class="h5">Форма выпуска :</div>
+                    <p class="ml-1">@Model.ReleaseMedicine.Medicine.MedicineType.Type</p>
+                </div>
+                <div class="mt-2 d-flex flex-row align-items-baseline">
+                    <div class="h5">Объём :</div>
+                    <p class="ml-1">@Model.ReleaseMedicine.Medicine.Volume</p>
+                    <p class="ml-1">@Model.ReleaseMedicine.Medicine.MedicineUnit.Unit</p>
+                </div>
+                <div class="mt-2 d-flex flex-row align-items-baseline">
+                    <div class="h5">Предназначение :</div>
+                    <p class="ml-1">@Model.ReleaseMedicine.Medicine.MedicineName.CatalogMedicines.NameCatalogMedicine</p>
+                </div>
+                <div class="mt-2 d-flex flex-row align-items-baseline">
+                    <div class="h5">Дозировка :</div>
+                    <p class="ml-1">@Model.ReleaseMedicine.Medicine.Dosage мг</p>
+                </div>
+                <div class="mt-2 d-flex flex-row align-items-baseline">
+                    <div class="h5">Дата выпуска :</div>
+                    <p class="ml-1">@Model.ReleaseMedicine.ReleaseDate</p>
+                </div>
+                <div class="mt-2 d-flex flex-row align-items-baseline">
+                    <div class="h5">Срок годности :</div>
+                    <p class="ml-1">@Model.ReleaseMedicine.ExpirationDate</p>
+                </div>
+                <div class="mt-2">
+                    <div class="h5">Описание :</div>
+                    <p>@Model.ReleaseMedicine.Description</p>
+                </div>
             </div>
         </div>
     </div>

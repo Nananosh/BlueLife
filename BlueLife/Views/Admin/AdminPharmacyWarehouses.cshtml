@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "_AdminLayout";
 }
-
+<script src="https://kendo.cdn.telerik.com/2022.1.119/js/jszip.min.js"></script>
 <body>
 <br/><br/><br/>
 <div id="example">
@@ -42,22 +42,29 @@
                                }
                            },
                            pageSize: 20,
-                           serverPaging: true,
-                           serverFiltering: true,
-                           serverSorting: true
+                           serverPaging: false,
+                           serverFiltering: false,
+                           serverSorting: false
                        },
                        height: 550,
                        editable: "popup",
-                       // filterable: true,
-                       // sortable: true,
+                       filterable: true,
+                       sortable: true,
                        pageable: true,
                        toolbar: [
-                           {name: "create"}
+                           {name: "create"},
+                           {name: "excel"}
                        ],
+                       excel: {
+                           fileName: "PharmacyWareyhouses.xlsx",
+                           filterable: true,
+                           allPages: true
+                       },
                        columns: [
                            {
                                field:"Id",
-                               filterable: false
+                               filterable: false,
+                               excel: false,
                            },
                            {
                                field: "ReleaseMedicine.fullReleaseMedicine",

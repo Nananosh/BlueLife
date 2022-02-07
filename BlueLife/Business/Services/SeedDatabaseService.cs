@@ -12,11 +12,34 @@ namespace BlueLife.Business.Services
     {
         private readonly ApplicationContext db;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> userManager;
 
-        public SeedDatabaseService(ApplicationContext db, RoleManager<IdentityRole> roleManager)
+        public SeedDatabaseService(ApplicationContext db, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             this.roleManager = roleManager;
+            this.userManager = userManager;
             this.db = db;
+        }
+        
+        public async Task CreateStartAdmin()
+        {
+            if (db.Users.Any(x => x.UserName == "Admin"))
+            {
+                Console.WriteLine("Админ уже есть");   
+            }
+            else
+            {
+                var user = new User
+                {
+                    Email = "admin@bluelife.com", UserName = "Admin",
+                    UserImage = "https://img.icons8.com/material-outlined/200/000000/user--v1.png"
+                };
+
+                await userManager.CreateAsync(user, "123Snp-");
+                await db.SaveChangesAsync();
+                await userManager.AddToRoleAsync(user, "Admin");
+                Console.WriteLine("Админ создан");
+            }
         }
 
         public void CreateStartOrderStatus()
