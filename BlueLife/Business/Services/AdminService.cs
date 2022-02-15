@@ -366,11 +366,16 @@ namespace BlueLife.Business.Services
             EmailConfim emailService = new EmailConfim();
             await emailService.SendEmailDefault(user.Email, $"Заказ №{order.Id}",
                 $"Статус вашего заказа изменился с  \"{lastStatus}\" на \"{order.OrderStatus.Status}\".");
+            if (order.OrderStatusId == 2)
+            {
+                await emailService.SendEmailDefault(user.Email, $"Заказ №{order.Id}",
+                    $"Заказ можно получить в аптеке \"BlueLife\" по адресу {order.OrderAddress.Address}. Срок хранение заказа в аптеке составляет 7 дней.");
+            }
         }
         
         public Order EditOrder(Order order)
         {
-            var editOrder = db.Order.Include(x => x.OrderStatus).FirstOrDefault(x => x.Id == order.Id);
+            var editOrder = db.Order.Include(x => x.OrderStatus).Include(x => x.OrderAddress).FirstOrDefault(x => x.Id == order.Id);
             var lastStatus = editOrder.OrderStatus.Status;
             if (editOrder != null)
             {

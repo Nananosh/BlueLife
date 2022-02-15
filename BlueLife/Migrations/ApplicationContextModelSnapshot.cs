@@ -184,6 +184,9 @@ namespace BlueLife.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderAddressId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -198,11 +201,28 @@ namespace BlueLife.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderAddressId");
+
                     b.HasIndex("OrderStatusId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.OrderAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderAddresses");
                 });
 
             modelBuilder.Entity("BlueLife.Models.OrderMedicine", b =>
@@ -580,6 +600,12 @@ namespace BlueLife.Migrations
 
             modelBuilder.Entity("BlueLife.Models.Order", b =>
                 {
+                    b.HasOne("BlueLife.Models.OrderAddress", "OrderAddress")
+                        .WithMany("Orders")
+                        .HasForeignKey("OrderAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BlueLife.Models.OrderStatus", "OrderStatus")
                         .WithMany("Orders")
                         .HasForeignKey("OrderStatusId")
@@ -589,6 +615,8 @@ namespace BlueLife.Migrations
                     b.HasOne("BlueLife.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("OrderAddress");
 
                     b.Navigation("OrderStatus");
 
@@ -733,6 +761,11 @@ namespace BlueLife.Migrations
             modelBuilder.Entity("BlueLife.Models.Order", b =>
                 {
                     b.Navigation("Medicines");
+                });
+
+            modelBuilder.Entity("BlueLife.Models.OrderAddress", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BlueLife.Models.OrderStatus", b =>

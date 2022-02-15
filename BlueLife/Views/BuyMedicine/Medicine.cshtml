@@ -57,11 +57,11 @@
                 </div>
                 <div class="mt-2 d-flex flex-row align-items-baseline">
                     <div class="h5">Дата выпуска :</div>
-                    <p class="ml-1">@Model.ReleaseMedicine.ReleaseDate</p>
+                    <p class="ml-1">@Model.ReleaseMedicine.ReleaseDate.ToShortDateString()</p>
                 </div>
                 <div class="mt-2 d-flex flex-row align-items-baseline">
                     <div class="h5">Срок годности :</div>
-                    <p class="ml-1">@Model.ReleaseMedicine.ExpirationDate</p>
+                    <p class="ml-1">@Model.ReleaseMedicine.ExpirationDate.ToShortDateString()</p>
                 </div>
                 <div class="mt-2">
                     <div class="h5">Описание :</div>

@@ -69,12 +69,13 @@ namespace BlueLife.Controllers
         {
             var basket = buyMedicineService.GetUserBasket(id);
             ViewBag.FullPriceByDiscount = buyMedicineService.GetTotalAmountByUserId(id);
+            ViewBag.Address = buyMedicineService.GetAllOrderAddress();
             return View(basket);
         }
 
-        public IActionResult AddBasketToOrder(string userId)
+        public IActionResult AddBasketToOrder(string userId, int addressId)
         {
-            buyMedicineService.AddBasketToOrder(userId);
+            buyMedicineService.AddBasketToOrder(userId, addressId);
             return RedirectToAction("Basket", new {id = userId});
         }
         

@@ -13,6 +13,8 @@ namespace BlueLife.Models
         public int TotalAmount { get; set; } 
         public OrderStatus OrderStatus { get; set; }
         public int OrderStatusId { get; set; }
+        public OrderAddress OrderAddress { get; set; }
+        public int OrderAddressId { get; set; }
         public List<OrderMedicine> Medicines { get; set; }
     }
 }

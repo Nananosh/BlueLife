@@ -106,13 +106,23 @@ namespace BlueLife.Business.Services
             var medicine =
                 db.PharmacyWarehouses.FirstOrDefault(x =>
                     x.Id == basketMedicineViewModel.MedicineInPharmacyWarehouseId);
-            db.BasketMedicine.Add(new BasketMedicine
+            if (db.BasketMedicine.Any(x => x.PharmacyWarehouse.Id == medicine.Id))
             {
-                Basket = userBasket,
-                PharmacyWarehouse = medicine,
-                Quantity = basketMedicineViewModel.Quantity
-            });
-            db.SaveChanges();
+                var basket =
+                    db.BasketMedicine.FirstOrDefault(x => x.Basket == userBasket && x.PharmacyWarehouse == medicine);
+                basket.Quantity += basketMedicineViewModel.Quantity;
+                db.SaveChanges();
+            }
+            else
+            {
+                db.BasketMedicine.Add(new BasketMedicine
+                {
+                    Basket = userBasket,
+                    PharmacyWarehouse = medicine,
+                    Quantity = basketMedicineViewModel.Quantity
+                });
+                db.SaveChanges();
+            }
         }
 
         public List<BasketMedicine> GetUserBasket(string id)
@@ -147,10 +157,10 @@ namespace BlueLife.Business.Services
         {
             EmailConfim emailService = new EmailConfim();
             await emailService.SendEmailDefault(user.Email, $"Заказ №{order.Id}",
-                $"Спасибо за покупку! Ваш заказ находится в статусе \"{order.OrderStatus.Status}\".");
+                $"Спасибо за предзаказ! Ваш заказ находится в статусе \"{order.OrderStatus.Status}\".");
         }
 
-        private int AddOrder(string userId)
+        private int AddOrder(string userId, int addressId)
         {
             var user = db.Users.FirstOrDefault(x => x.Id == userId);
             var order = new Order
@@ -159,6 +169,7 @@ namespace BlueLife.Business.Services
                 OrderDate = DateTime.Now,
                 Description = "Спасибо что выбрали нашу аптеку",
                 OrderStatusId = 1,
+                OrderAddressId = addressId,
                 TotalAmount = GetTotalAmountByUserId(userId)
             };
             db.Order.Add(order);
@@ -169,12 +180,12 @@ namespace BlueLife.Business.Services
             return order.Id;
         }
 
-        public void AddBasketToOrder(string userId)
+        public void AddBasketToOrder(string userId, int addressId)
         {
             var basket = db.BasketMedicine
                 .Include(x => x.PharmacyWarehouse)
                 .Where(x => x.Basket.User.Id == userId).ToList();
-            var orderId = AddOrder(userId);
+            var orderId = AddOrder(userId, addressId);
             foreach (var basketMedicine in basket)
             {
                 db.OrderMedicine.Add(new OrderMedicine
@@ -213,6 +224,8 @@ namespace BlueLife.Business.Services
                 .Include(x => x.PharmacyWarehouse.ReleaseMedicine)
                 .ThenInclude(x => x.Medicine)
                 .ThenInclude(x => x.MedicineUnit)
+                .Include(x => x.Order)
+                .ThenInclude(x => x.OrderAddress)
                 .Where(x => x.Order.Id == id).ToList();
             return order;
         }
@@ -224,6 +237,13 @@ namespace BlueLife.Business.Services
                 db.BasketMedicine.FirstOrDefault(x => x.PharmacyWarehouse.Id == id && x.Basket.User.Id == userId);
             if (medicine != null) db.BasketMedicine.Remove(medicine);
             db.SaveChanges();
+        }
+
+        public List<OrderAddress> GetAllOrderAddress()
+        {
+            var addresses = db.OrderAddresses.ToList();
+
+            return addresses;
         }
 
         private void AddDiscountUser(string userId)

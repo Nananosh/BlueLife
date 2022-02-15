@@ -10,7 +10,6 @@ namespace BlueLife.Migrations
             : base(options)
         {
         }
-        
 
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketMedicine> BasketMedicine { get; set; }
@@ -25,6 +24,6 @@ namespace BlueLife.Migrations
         public DbSet<PharmacyWarehouse> PharmacyWarehouses { get; set; }
         public DbSet<CatalogMedicine> CatalogMedicine { get; set; }
         public DbSet<ReleaseMedicine> ReleaseMedicine { get; set; }
-        
+        public DbSet<OrderAddress> OrderAddresses { get; set; }
     }
 }

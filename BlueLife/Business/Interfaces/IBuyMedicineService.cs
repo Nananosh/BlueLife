@@ -14,9 +14,10 @@ namespace BlueLife.Business.Interfaces
         public void AddMedicineToBasket(BasketMedicineViewModel basketMedicineViewModel);
         public List<BasketMedicine> GetUserBasket(string id);
         public int GetTotalAmountByUserId(string id);
-        public void AddBasketToOrder(string userId);
+        public void AddBasketToOrder(string userId, int addressId);
         public List<Order> GetAllOrdersByUserId(string id);
         public List<OrderMedicine> GetOrderById(int id);
         public void DeleteMedicineInBasket(int id, string userId);
+        public List<OrderAddress> GetAllOrderAddress();
     }
 }

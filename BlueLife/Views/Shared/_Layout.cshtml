@@ -55,6 +55,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-route-id="@User.Claims.ElementAt(0).Value">@User.Claims.ElementAt(1).Value</a>
                                 <div class="dropdown-divider"></div>
+                                <div class="dropdown-item d-flex align-items-baseline">Ваша скидка:<div id="discount" class="ml-1"></div>%</div>
                                 <a class="dropdown-item" asp-area="" asp-controller="BuyMedicine" asp-action="Orders" asp-route-id="@User.Claims.ElementAt(0).Value">Заказы</a>
                                 @if (User.IsInRole("Admin"))
                                 {
@@ -87,6 +88,10 @@
 let avatar = document.getElementById('avatar');
 $.get('@Url.Action("GetUserImage", "Account", new {id = User.Claims.ElementAt(0).Value})', function(data, status){
     avatar.src = data;
+});
+let discount = document.getElementById('discount');
+$.get('@Url.Action("GetUserDiscount", "Account", new {id = User.Claims.ElementAt(0).Value})', function(data, status){
+    discount.innerText  = data;
 });
     </script>
 }

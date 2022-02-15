@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlueLife.Migrations
 {
-    public partial class CreateDataBase : Migration
+    public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -101,6 +101,19 @@ namespace BlueLife.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MedicineUnit", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderAddresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderAddresses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,7 +261,7 @@ namespace BlueLife.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CatalogMedicinesId = table.Column<int>(type: "int", nullable: true)
+                    CatalogMedicinesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -258,7 +271,7 @@ namespace BlueLife.Migrations
                         column: x => x.CatalogMedicinesId,
                         principalTable: "CatalogMedicine",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -271,7 +284,8 @@ namespace BlueLife.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalAmount = table.Column<int>(type: "int", nullable: false),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: true)
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    OrderAddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,11 +297,17 @@ namespace BlueLife.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Order_OrderAddresses_OrderAddressId",
+                        column: x => x.OrderAddressId,
+                        principalTable: "OrderAddresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Order_OrderStatus_OrderStatusId",
                         column: x => x.OrderStatusId,
                         principalTable: "OrderStatus",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -296,9 +316,9 @@ namespace BlueLife.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MedicineNameId = table.Column<int>(type: "int", nullable: true),
-                    MedicineTypeId = table.Column<int>(type: "int", nullable: true),
-                    MedicineUnitId = table.Column<int>(type: "int", nullable: true),
+                    MedicineNameId = table.Column<int>(type: "int", nullable: false),
+                    MedicineTypeId = table.Column<int>(type: "int", nullable: false),
+                    MedicineUnitId = table.Column<int>(type: "int", nullable: false),
                     Volume = table.Column<int>(type: "int", nullable: false),
                     Dosage = table.Column<double>(type: "float", nullable: false)
                 },
@@ -310,19 +330,19 @@ namespace BlueLife.Migrations
                         column: x => x.MedicineNameId,
                         principalTable: "MedicineName",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Medicine_MedicineType_MedicineTypeId",
                         column: x => x.MedicineTypeId,
                         principalTable: "MedicineType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Medicine_MedicineUnit_MedicineUnitId",
                         column: x => x.MedicineUnitId,
                         principalTable: "MedicineUnit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -331,8 +351,8 @@ namespace BlueLife.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MedicineId = table.Column<int>(type: "int", nullable: true),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: true),
+                    MedicineId = table.Column<int>(type: "int", nullable: false),
+                    ManufacturerId = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -346,13 +366,13 @@ namespace BlueLife.Migrations
                         column: x => x.MedicineId,
                         principalTable: "Medicine",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ReleaseMedicine_MedicineManufacturer_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "MedicineManufacturer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -361,9 +381,10 @@ namespace BlueLife.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReleaseMedicineId = table.Column<int>(type: "int", nullable: true),
+                    ReleaseMedicineId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    IsRecipe = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -373,7 +394,7 @@ namespace BlueLife.Migrations
                         column: x => x.ReleaseMedicineId,
                         principalTable: "ReleaseMedicine",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -409,8 +430,8 @@ namespace BlueLife.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: true),
-                    PharmacyWarehouseId = table.Column<int>(type: "int", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    PharmacyWarehouseId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -421,13 +442,13 @@ namespace BlueLife.Migrations
                         column: x => x.OrderId,
                         principalTable: "Order",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderMedicine_PharmacyWarehouses_PharmacyWarehouseId",
                         column: x => x.PharmacyWarehouseId,
                         principalTable: "PharmacyWarehouses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -505,6 +526,11 @@ namespace BlueLife.Migrations
                 column: "CatalogMedicinesId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order_OrderAddressId",
+                table: "Order",
+                column: "OrderAddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_OrderStatusId",
                 table: "Order",
                 column: "OrderStatusId");
@@ -577,6 +603,9 @@ namespace BlueLife.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "OrderAddresses");
 
             migrationBuilder.DropTable(
                 name: "OrderStatus");

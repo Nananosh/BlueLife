@@ -14,18 +14,19 @@ namespace BlueLife.Business.Services
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
 
-        public SeedDatabaseService(ApplicationContext db, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public SeedDatabaseService(ApplicationContext db, RoleManager<IdentityRole> roleManager,
+            UserManager<User> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.db = db;
         }
-        
+
         public async Task CreateStartAdmin()
         {
             if (db.Users.Any(x => x.UserName == "Admin"))
             {
-                Console.WriteLine("Админ уже есть");   
+                Console.WriteLine("Админ уже есть");
             }
             else
             {
@@ -96,6 +97,42 @@ namespace BlueLife.Business.Services
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
                 Console.WriteLine("Роль админа создана");
+            }
+        }
+
+        public async Task CreateStartAddress()
+        {
+            if (db.OrderAddresses.Any(x => x.Address == "ул Колесникова, 3"))
+            {
+                Console.WriteLine("ул Колесникова, 3 есть");
+            }
+            else
+            {
+                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "ул Колесникова, 3"});
+                await db.SaveChangesAsync();
+                Console.WriteLine("ул Колесникова, 3 создана");
+            }
+
+            if (db.OrderAddresses.Any(x => x.Address == "ул Глебки, 10"))
+            {
+                Console.WriteLine("ул Глебки, 10 есть");
+            }
+            else
+            {
+                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "ул Глебки, 10"});
+                await db.SaveChangesAsync();
+                Console.WriteLine("ул Глебки, 10 создана");
+            }
+
+            if (db.OrderAddresses.Any(x => x.Address == "ул Янки Купалы, 20"))
+            {
+                Console.WriteLine("ул Янки Купалы, 20 есть");
+            }
+            else
+            {
+                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "ул Янки Купалы, 20"});
+                await db.SaveChangesAsync();
+                Console.WriteLine("ул Янки Купалы, 20 создана");
             }
         }
     }

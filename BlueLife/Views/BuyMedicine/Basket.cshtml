@@ -35,10 +35,19 @@
             </div>
             <div class="col-lg-12 d-flex justify-content-end align-items-start">
                 <form method="post" asp-controller="BuyMedicine" asp-action="AddBasketToOrder">
+                    <div class="input-group d-flex justify-content-end align-items-baseline">
+                        <p class="mr-2">Адрес самовывоза: </p>
+                        <select class="custom-select" id="inputGroupSelect01" name="addressId">
+                            @foreach (var address in ViewBag.Address)
+                            {
+                                <option value="@address.Id">@address.Address</option>
+                            }
+                        </select>
+                    </div>
                     <input type="hidden" name="userId" value="@User.Claims.ElementAt(0).Value"/>
                     @if (Model.Count > 0)
                     {
-                        <button type="submit" class="btn btn-primary">Оформить заказ</button>
+                        <button type="submit" class="btn btn-primary justify-content-end">Оформить заказ</button>
                     }
                 </form>
             </div>

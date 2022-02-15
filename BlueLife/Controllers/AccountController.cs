@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using BlueLife.Migrations;
 using BlueLife.Models;
 using BlueLife.ViewModels;
@@ -22,6 +23,12 @@ namespace BlueLife.Controllers
             _database = context;
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        public async Task<int> GetUserDiscount(string id)
+        {
+            var user = await _database.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return user.Discount;
         }
         
         public async Task<string> GetUserImage(string id)
@@ -88,6 +95,14 @@ namespace BlueLife.Controllers
                         return Redirect(model.ReturnUrl);
                     
                     await _database.SaveChangesAsync();
+
+                    var user = _database.Users.FirstOrDefault(x => x.UserName == model.UserName);
+                    var adminRole = _database.Roles.FirstOrDefault(x => x.Name == "Admin");
+                    if (_database.UserRoles.Any(x => x.UserId == user.Id && x.RoleId == adminRole.Id))
+                    {
+                        return RedirectToAction("AdminPanel", "Admin");
+                    }
+                    
                     return RedirectToAction("Index", "Home");
                 }
 
