@@ -424,3 +424,25 @@ a[href*="#followme"]::before {
   height: 3.9em;
 }
 
+
+@font-face {
+  font-family: "ScriptBold";
+  src: url("../Script Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+.sb{
+  font-family: "ScriptBold";
+}
+
+
+@font-face {
+  font-family: "Rostov";
+  src: url("../Rostov.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+.rv{
+  font-family: "Rostov";
+  font-size: 20px;
+}

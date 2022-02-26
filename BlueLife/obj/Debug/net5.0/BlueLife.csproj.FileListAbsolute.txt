@@ -100,3 +100,4 @@ C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Sear
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\bin\Debug\net5.0\MailKit.dll
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\bin\Debug\net5.0\MimeKit.dll
 C:\Users\nanan\RiderProjects\BlueLife\BlueLife\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\nanan\RiderProjects\BlueLife\BlueLife\obj\Debug\net5.0\Razor\Views\Home\About.cshtml.g.cs
