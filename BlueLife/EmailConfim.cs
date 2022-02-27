@@ -13,7 +13,7 @@ namespace BlueLife
         public async Task SendEmailDefault(string email, string subject, string message)
         {
             MimeMessage emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress("FanFan - Сервис с фанфиками", "fanfanconfim@fanfan.com"));
+            emailMessage.From.Add(new MailboxAddress("Аптека BlueLife", "fanfanconfim@fanfan.com"));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
