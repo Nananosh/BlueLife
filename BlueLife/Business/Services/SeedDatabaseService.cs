@@ -102,37 +102,37 @@ namespace BlueLife.Business.Services
 
         public async Task CreateStartAddress()
         {
-            if (db.OrderAddresses.Any(x => x.Address == "ул Колесникова, 3"))
+            if (db.OrderAddresses.Any(x => x.Address == "Переулок Козлова 51а"))
             {
-                Console.WriteLine("ул Колесникова, 3 есть");
+                Console.WriteLine("Переулок Козлова 51а есть");
             }
             else
             {
-                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "ул Колесникова, 3"});
+                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "Переулок Козлова 51а"});
                 await db.SaveChangesAsync();
-                Console.WriteLine("ул Колесникова, 3 создана");
+                Console.WriteLine("Переулок Козлова 51а создана");
             }
 
-            if (db.OrderAddresses.Any(x => x.Address == "ул Глебки, 10"))
+            if (db.OrderAddresses.Any(x => x.Address == "Долгинский тракт 160"))
             {
-                Console.WriteLine("ул Глебки, 10 есть");
+                Console.WriteLine("Долгинский тракт 160 есть");
             }
             else
             {
-                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "ул Глебки, 10"});
+                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "Долгинский тракт 160"});
                 await db.SaveChangesAsync();
-                Console.WriteLine("ул Глебки, 10 создана");
+                Console.WriteLine("Долгинский тракт 160 создана");
             }
 
-            if (db.OrderAddresses.Any(x => x.Address == "ул Янки Купалы, 20"))
+            if (db.OrderAddresses.Any(x => x.Address == "Улица Алибегова 18"))
             {
-                Console.WriteLine("ул Янки Купалы, 20 есть");
+                Console.WriteLine("Улица Алибегова 18 есть");
             }
             else
             {
-                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "ул Янки Купалы, 20"});
+                await db.OrderAddresses.AddAsync(new OrderAddress {Address = "Улица Алибегова 18"});
                 await db.SaveChangesAsync();
-                Console.WriteLine("ул Янки Купалы, 20 создана");
+                Console.WriteLine("Улица Алибегова 18 создана");
             }
         }
     }
